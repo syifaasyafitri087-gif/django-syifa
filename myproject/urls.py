@@ -1,6 +1,15 @@
 from django.contrib import admin
 from django.urls import path
-from myapp.views import home, hapus, edit, login_user, logout_user
+
+# 🔥 import semua views
+from myapp.views import (
+    home,
+    hapus,
+    edit,
+    login_user,
+    logout_user,
+    register_user
+)
 
 urlpatterns = [
     # 🔧 ADMIN
@@ -20,4 +29,7 @@ urlpatterns = [
 
     # 🔓 LOGOUT
     path('logout/', logout_user, name='logout'),
+
+    # 📝 REGISTER
+    path('register/', register_user, name='register'),
 ]
