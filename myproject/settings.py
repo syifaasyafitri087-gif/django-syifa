@@ -10,7 +10,13 @@ SECRET_KEY = 'django-insecure-ganti-dengan-key-kamu'
 
 DEBUG = True
 
-ALLOWED_HOSTS = ['*']
+ALLOWED_HOSTS = ['.railway.app']
+
+
+# 🔥 FIX CSRF (WAJIB UNTUK RAILWAY)
+CSRF_TRUSTED_ORIGINS = [
+    "https://web-production-8be38.up.railway.app"
+]
 
 
 # INSTALLED APPS
@@ -29,7 +35,7 @@ INSTALLED_APPS = [
 # MIDDLEWARE
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
-    'whitenoise.middleware.WhiteNoiseMiddleware',  # 🔥 penting
+    'whitenoise.middleware.WhiteNoiseMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
