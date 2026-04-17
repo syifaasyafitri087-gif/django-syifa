@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Website Syifa</title>
+
+    <!-- 🔥 BOOTSTRAP -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+
+    <!-- 💎 CUSTOM STYLE -->
+    <style>
+        /* 🌈 Background elegan */
+        body {
+            background: linear-gradient(to right, #eef2f3, #dfe9f3);
+        }
+
+        /* 💎 Card hover */
+        .list-group-item:hover {
+            transform: scale(1.01);
+            transition: 0.3s;
+            background-color: #f8f9fa;
+        }
+
+        /* 🔥 Button smooth */
+        .btn {
+            transition: 0.2s;
+        }
+
+        .btn:hover {
+            transform: scale(1.05);
+            opacity: 0.9;
+        }
+
+        /* ✨ Input lebih clean */
+        input {
+            border-radius: 8px;
+        }
+
+        /* 💎 Username navbar */
+        .navbar span {
+            font-weight: bold;
+        }
+    </style>
+
+</head>
+
+<body>
+
+<!-- 🔥 NAVBAR -->
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+  <div class="container">
+    <a class="navbar-brand fw-bold" href="/">SyifaApp</a>
+    
+    <div>
+      <a class="nav-link d-inline text-white" href="/">Home</a>
+
+      {% if user.is_authenticated %}
+          <span class="text-white me-3">👤 {{ user.username }}</span>
+          <a class="btn btn-danger btn-sm" href="/logout/">Logout</a>
+      {% else %}
+          <a class="btn btn-primary btn-sm" href="/login/">Login</a>
+      {% endif %}
+    </div>
+  </div>
+</nav>
+
+<!-- 🔥 CONTENT -->
+<div class="container mt-5">
+    {% block content %}
+    {% endblock %}
+</div>
+
+</body>
+</html>
