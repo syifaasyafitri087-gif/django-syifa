@@ -1,25 +1,29 @@
 from pathlib import Path
 import os
 
+# =====================================
 # BASE DIR
+# =====================================
 BASE_DIR = Path(__file__).resolve().parent.parent
 
 
+# =====================================
 # SECURITY
+# =====================================
 SECRET_KEY = 'django-insecure-ganti-dengan-key-kamu'
 
 DEBUG = True
 
-ALLOWED_HOSTS = ['.railway.app']
+ALLOWED_HOSTS = ['*']
 
-
-# 🔥 FIX CSRF (WAJIB UNTUK RAILWAY)
 CSRF_TRUSTED_ORIGINS = [
-    "https://web-production-8be38.up.railway.app"
+    "https://*.up.railway.app"
 ]
 
 
+# =====================================
 # INSTALLED APPS
+# =====================================
 INSTALLED_APPS = [
     'django.contrib.admin',
     'django.contrib.auth',
@@ -32,24 +36,33 @@ INSTALLED_APPS = [
 ]
 
 
+# =====================================
 # MIDDLEWARE
+# =====================================
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
     'whitenoise.middleware.WhiteNoiseMiddleware',
+
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
+
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
+
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
 
 
-# URL ROOT
+# =====================================
+# ROOT URLCONF
+# =====================================
 ROOT_URLCONF = 'myproject.urls'
 
 
+# =====================================
 # TEMPLATES
+# =====================================
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
@@ -57,7 +70,6 @@ TEMPLATES = [
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
-                'django.template.context_processors.debug',
                 'django.template.context_processors.request',
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
@@ -67,11 +79,15 @@ TEMPLATES = [
 ]
 
 
+# =====================================
 # WSGI
+# =====================================
 WSGI_APPLICATION = 'myproject.wsgi.application'
 
 
+# =====================================
 # DATABASE
+# =====================================
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.sqlite3',
@@ -80,25 +96,16 @@ DATABASES = {
 }
 
 
+# =====================================
 # PASSWORD VALIDATION
-AUTH_PASSWORD_VALIDATORS = [
-    {
-        'NAME': 'django.contrib.auth.password_validation.UserAttributeSimilarityValidator',
-    },
-    {
-        'NAME': 'django.contrib.auth.password_validation.MinimumLengthValidator',
-    },
-    {
-        'NAME': 'django.contrib.auth.password_validation.CommonPasswordValidator',
-    },
-    {
-        'NAME': 'django.contrib.auth.password_validation.NumericPasswordValidator',
-    },
-]
+# =====================================
+AUTH_PASSWORD_VALIDATORS = []
 
 
-# LANGUAGE & TIME
-LANGUAGE_CODE = 'en-us'
+# =====================================
+# LANGUAGE
+# =====================================
+LANGUAGE_CODE = 'id-id'
 
 TIME_ZONE = 'Asia/Jakarta'
 
@@ -106,10 +113,25 @@ USE_I18N = True
 USE_TZ = True
 
 
-# STATIC FILE
+# =====================================
+# STATIC FILES
+# =====================================
 STATIC_URL = '/static/'
+
 STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
 
+STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
 
+
+# =====================================
+# MEDIA FILES
+# =====================================
+MEDIA_URL = '/media/'
+
+MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
+
+
+# =====================================
 # DEFAULT FIELD
+# =====================================
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'

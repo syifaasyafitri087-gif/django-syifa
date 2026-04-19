@@ -1,35 +1,43 @@
 from django.contrib import admin
 from django.urls import path
+from django.conf import settings
+from django.conf.urls.static import static
 
-# 🔥 import semua views
 from myapp.views import (
     home,
-    hapus,
-    edit,
     login_user,
     logout_user,
-    register_user
+    register_user,
+    upload_post,
+    like_post,
+    comment_post,
+    delete_post,
+    edit_post,
+    profile
 )
 
 urlpatterns = [
-    # 🔧 ADMIN
     path('admin/', admin.site.urls),
 
-    # 🏠 HOME
     path('', home, name='home'),
 
-    # ✏️ EDIT
-    path('edit/<int:id>/', edit, name='edit'),
-
-    # 🗑️ HAPUS
-    path('hapus/<int:id>/', hapus, name='hapus'),
-
-    # 🔐 LOGIN
     path('login/', login_user, name='login'),
-
-    # 🔓 LOGOUT
     path('logout/', logout_user, name='logout'),
-
-    # 📝 REGISTER
     path('register/', register_user, name='register'),
+
+    path('upload/', upload_post, name='upload'),
+
+    path('like/<int:id>/', like_post, name='like'),
+    path('comment/<int:id>/', comment_post, name='comment'),
+
+    path('delete/<int:id>/', delete_post, name='delete'),
+    path('edit/<int:id>/', edit_post, name='edit'),
+
+    # 🔥 PROFILE
+    path('profile/', profile, name='profile'),
 ]
+
+urlpatterns += static(
+    settings.MEDIA_URL,
+    document_root=settings.MEDIA_ROOT
+)
