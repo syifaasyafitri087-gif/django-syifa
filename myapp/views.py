@@ -1,201 +1,383 @@
 from django.shortcuts import render, redirect, get_object_or_404
+
 from django.contrib.auth import authenticate, login, logout
-from django.contrib.auth.decorators import login_required
+
 from django.contrib.auth.models import User
 
-from .models import Nama, Post, Like, Comment, Profile
+from django.contrib.auth.decorators import login_required
 
+from .models import Post, Like, Comment, Profile, Follow
 
-# ======================
+# =========================
+
 # REGISTER
-# ======================
-def register_user(request):
-    if request.method == 'POST':
-        username = request.POST.get('username')
-        password = request.POST.get('password')
+
+# =========================
+
+def register_view(request):
+
+    if request.method == "POST":
+
+        username = request.POST['username']
+
+        password = request.POST['password']
 
         if User.objects.filter(username=username).exists():
+
             return render(request, 'register.html', {
-                'error': 'Username sudah digunakan'
+
+                'error': 'Username sudah dipakai'
+
             })
 
-        User.objects.create_user(
+        user = User.objects.create_user(
+
             username=username,
+
             password=password
+
         )
 
-        return redirect('/login/')
+        Profile.objects.create(user=user)
+
+        return redirect('login')
 
     return render(request, 'register.html')
 
+# =========================
 
-# ======================
 # LOGIN
-# ======================
-def login_user(request):
-    if request.method == 'POST':
-        username = request.POST.get('username')
-        password = request.POST.get('password')
+
+# =========================
+
+def login_view(request):
+
+    if request.method == "POST":
+
+        username = request.POST['username']
+
+        password = request.POST['password']
 
         user = authenticate(
+
+            request,
+
             username=username,
+
             password=password
+
         )
 
-        if user:
+        if user is not None:
+
             login(request, user)
-            return redirect('/')
+
+            return redirect('home')
 
         return render(request, 'login.html', {
+
             'error': 'Username / Password salah'
+
         })
 
     return render(request, 'login.html')
 
+# =========================
 
-# ======================
 # LOGOUT
-# ======================
-def logout_user(request):
+
+# =========================
+
+def logout_view(request):
+
     logout(request)
-    return redirect('/login/')
 
+    return redirect('login')
 
-# ======================
+# =========================
+
 # HOME
-# ======================
-@login_required(login_url='/login/')
+
+# =========================
+
+@login_required
+
 def home(request):
+
     posts = Post.objects.all().order_by('-id')
 
-    return render(request, 'index.html', {
+    return render(request, 'home.html', {
+
         'posts': posts
+
     })
 
+# =========================
 
-# ======================
-# UPLOAD POST
-# ======================
-@login_required(login_url='/login/')
+# UPLOAD POSTINGAN
+
+# =========================
+
+@login_required
+
 def upload_post(request):
-    if request.method == 'POST':
+
+    if request.method == "POST":
+
         caption = request.POST.get('caption')
+
         image = request.FILES.get('image')
 
-        if caption or image:
+        if image:
+
             Post.objects.create(
+
                 user=request.user,
+
                 caption=caption,
+
                 image=image
+
             )
 
-    return redirect('/')
+    return redirect('home')
 
+# =========================
 
-# ======================
-# LIKE
-# ======================
-@login_required(login_url='/login/')
-def like_post(request, id):
-    post = get_object_or_404(Post, id=id)
+# LIKE POST
 
-    cek = Like.objects.filter(
+# =========================
+
+@login_required
+
+def like_post(request, post_id):
+
+    post = get_object_or_404(Post, id=post_id)
+
+    liked = Like.objects.filter(
+
         user=request.user,
+
         post=post
+
     ).first()
 
-    if cek:
-        cek.delete()
+    if liked:
+
+        liked.delete()
+
     else:
+
         Like.objects.create(
+
             user=request.user,
+
             post=post
+
         )
 
-    return redirect('/')
+    return redirect('home')
 
+# =========================
 
-# ======================
-# COMMENT
-# ======================
-@login_required(login_url='/login/')
-def comment_post(request, id):
-    post = get_object_or_404(Post, id=id)
+# HAPUS POST
 
-    if request.method == 'POST':
-        text = request.POST.get('text')
+# =========================
 
-        if text:
-            Comment.objects.create(
-                user=request.user,
-                post=post,
-                text=text
-            )
+@login_required
 
-    return redirect('/')
+def delete_post(request, post_id):
 
-
-# ======================
-# DELETE POST
-# ======================
-@login_required(login_url='/login/')
-def delete_post(request, id):
-    post = get_object_or_404(Post, id=id)
+    post = get_object_or_404(Post, id=post_id)
 
     if post.user == request.user:
+
         post.delete()
 
-    return redirect('/')
+    return redirect('home')
 
+# =========================
 
-# ======================
 # EDIT POST
-# ======================
-@login_required(login_url='/login/')
-def edit_post(request, id):
-    post = get_object_or_404(Post, id=id)
+
+# =========================
+
+@login_required
+
+def edit_post(request, post_id):
+
+    post = get_object_or_404(Post, id=post_id)
 
     if post.user != request.user:
-        return redirect('/')
 
-    if request.method == 'POST':
+        return redirect('home')
+
+    if request.method == "POST":
+
         caption = request.POST.get('caption')
 
-        if caption:
-            post.caption = caption
-            post.save()
+        post.caption = caption
 
-        return redirect('/')
+        post.save()
 
-    return render(request, 'edit_post.html', {
+        return redirect('home')
+
+    return render(request, 'edit.html', {
+
         'post': post
+
     })
 
+# =========================
 
-# ======================
+# KOMENTAR
+
+# =========================
+
+@login_required
+
+def add_comment(request, post_id):
+
+    if request.method == "POST":
+
+        post = get_object_or_404(Post, id=post_id)
+
+        isi = request.POST.get('isi')
+
+        if isi:
+
+            Comment.objects.create(
+
+                user=request.user,
+
+                post=post,
+
+                isi=isi
+
+            )
+
+    return redirect('home')
+
+# =========================
+
 # PROFILE USER
-# ======================
-@login_required(login_url='/login/')
-def profile(request):
+
+# =========================
+
+@login_required
+
+def profile_view(request):
 
     profile, created = Profile.objects.get_or_create(
+
         user=request.user
+
     )
 
-    if request.method == 'POST':
+    my_posts = Post.objects.filter(
+
+        user=request.user
+
+    ).order_by('-id')
+
+    followers = Follow.objects.filter(
+
+        following=request.user
+
+    ).count()
+
+    following = Follow.objects.filter(
+
+        follower=request.user
+
+    ).count()
+
+    return render(request, 'profile.html', {
+
+        'profile': profile,
+
+        'posts': my_posts,
+
+        'followers': followers,
+
+        'following': following
+
+    })
+
+# =========================
+
+# UPDATE FOTO PROFILE
+
+# =========================
+
+@login_required
+
+def update_profile(request):
+
+    profile, created = Profile.objects.get_or_create(
+
+        user=request.user
+
+    )
+
+    if request.method == "POST":
+
+        foto = request.FILES.get('foto')
 
         bio = request.POST.get('bio')
-        foto = request.FILES.get('foto')
+
+        if foto:
+
+            profile.foto = foto
 
         profile.bio = bio
 
-        if foto:
-            profile.foto = foto
-
         profile.save()
 
-        return redirect('/profile/')
+    return redirect('profile')
 
-    return render(request, 'profile.html', {
-        'profile': profile
-    })
+# =========================
+
+# FOLLOW USER
+
+# =========================
+
+@login_required
+
+def follow_user(request, user_id):
+
+    target = get_object_or_404(User, id=user_id)
+
+    if request.user != target:
+
+        Follow.objects.get_or_create(
+
+            follower=request.user,
+
+            following=target
+
+        )
+
+    return redirect('home')
+
+# =========================
+
+# UNFOLLOW USER
+
+# =========================
+
+@login_required
+
+def unfollow_user(request, user_id):
+
+    target = get_object_or_404(User, id=user_id)
+
+    Follow.objects.filter(
+
+        follower=request.user,
+
+        following=target
+
+    ).delete()
+
+    return redirect('home')

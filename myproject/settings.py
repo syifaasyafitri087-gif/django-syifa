@@ -1,29 +1,20 @@
 from pathlib import Path
 import os
 
-# =====================================
-# BASE DIR
-# =====================================
+# Base directory
 BASE_DIR = Path(__file__).resolve().parent.parent
 
 
-# =====================================
-# SECURITY
-# =====================================
-SECRET_KEY = 'django-insecure-ganti-dengan-key-kamu'
+# SECURITY WARNING: keep the secret key used in production secret!
+SECRET_KEY = 'django-insecure-change-this-key'
 
+# SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
 ALLOWED_HOSTS = ['*']
 
-CSRF_TRUSTED_ORIGINS = [
-    "https://*.up.railway.app"
-]
 
-
-# =====================================
-# INSTALLED APPS
-# =====================================
+# Installed apps
 INSTALLED_APPS = [
     'django.contrib.admin',
     'django.contrib.auth',
@@ -32,41 +23,34 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
 
+    # app kamu
     'myapp',
 ]
 
 
-# =====================================
-# MIDDLEWARE
-# =====================================
+# Middleware
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
     'whitenoise.middleware.WhiteNoiseMiddleware',
 
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
-
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
-
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
 
 
-# =====================================
-# ROOT URLCONF
-# =====================================
+# Root URL
 ROOT_URLCONF = 'myproject.urls'
 
 
-# =====================================
-# TEMPLATES
-# =====================================
+# Templates
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [],
+        'DIRS': [BASE_DIR / 'templates'],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -79,15 +63,11 @@ TEMPLATES = [
 ]
 
 
-# =====================================
 # WSGI
-# =====================================
 WSGI_APPLICATION = 'myproject.wsgi.application'
 
 
-# =====================================
-# DATABASE
-# =====================================
+# Database
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.sqlite3',
@@ -96,16 +76,12 @@ DATABASES = {
 }
 
 
-# =====================================
-# PASSWORD VALIDATION
-# =====================================
+# Password validation
 AUTH_PASSWORD_VALIDATORS = []
 
 
-# =====================================
-# LANGUAGE
-# =====================================
-LANGUAGE_CODE = 'id-id'
+# Language / Timezone
+LANGUAGE_CODE = 'en-us'
 
 TIME_ZONE = 'Asia/Jakarta'
 
@@ -113,25 +89,24 @@ USE_I18N = True
 USE_TZ = True
 
 
-# =====================================
-# STATIC FILES
-# =====================================
+# Static files
 STATIC_URL = '/static/'
-
-STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
+STATICFILES_DIRS = [BASE_DIR / 'static']
+STATIC_ROOT = BASE_DIR / 'staticfiles'
 
 STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
 
 
-# =====================================
-# MEDIA FILES
-# =====================================
+# Media files
 MEDIA_URL = '/media/'
+MEDIA_ROOT = BASE_DIR / 'media'
 
-MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
+
+# Login Redirect
+LOGIN_URL = '/login/'
+LOGIN_REDIRECT_URL = '/home/'
+LOGOUT_REDIRECT_URL = '/login/'
 
 
-# =====================================
-# DEFAULT FIELD
-# =====================================
+# Default primary key field type
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
