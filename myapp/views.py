@@ -96,7 +96,7 @@ def upload_post(request):
 
 
 # =========================
-# LIKE POST (ManyToMany)
+# LIKE POST
 # =========================
 @login_required
 def like_post(request, post_id):
@@ -152,13 +152,13 @@ def edit_post(request, post_id):
 def add_comment(request, post_id):
     if request.method == "POST":
         post = get_object_or_404(Post, id=post_id)
-        isi = request.POST.get('isi')
+        text = request.POST.get('text')
 
-        if isi:
+        if text:
             Comment.objects.create(
                 user=request.user,
                 post=post,
-                isi=isi
+                text=text
             )
 
     return redirect('home')
@@ -203,11 +203,11 @@ def update_profile(request):
     )
 
     if request.method == "POST":
-        foto = request.FILES.get('foto')
+        photo = request.FILES.get('photo')
         bio = request.POST.get('bio')
 
-        if foto:
-            profile.foto = foto
+        if photo:
+            profile.photo = photo
 
         profile.bio = bio
         profile.save()

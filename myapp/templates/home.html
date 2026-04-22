@@ -1,60 +1,210 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>SyifaApp</title>
+
 <style>
 body{
     margin:0;
-    font-family:Arial;
-    background:#fafafa;
+    font-family:Arial, Helvetica, sans-serif;
+    background:#f0f2f5;
 }
+
+/* NAVBAR */
 .navbar{
-    background:white;
-    padding:15px;
-    border-bottom:1px solid #ddd;
-    font-size:28px;
-    font-weight:bold;
-    text-align:center;
+    background:#111827;
+    color:white;
+    padding:15px 30px;
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
 }
+
+.logo{
+    font-size:24px;
+    font-weight:bold;
+}
+
+.nav-right a{
+    color:white;
+    text-decoration:none;
+    margin-left:15px;
+    font-size:14px;
+}
+
+/* CONTAINER */
 .container{
     width:500px;
-    margin:auto;
-    margin-top:30px;
+    margin:30px auto;
 }
+
+/* UPLOAD BOX */
+.upload-box{
+    background:white;
+    padding:20px;
+    border-radius:12px;
+    margin-bottom:20px;
+    box-shadow:0 2px 8px rgba(0,0,0,0.08);
+}
+
+.upload-box textarea,
+.upload-box input{
+    width:100%;
+    padding:10px;
+    margin-top:10px;
+    border:1px solid #ddd;
+    border-radius:8px;
+}
+
+.upload-box button{
+    margin-top:10px;
+    padding:10px 20px;
+    border:none;
+    background:#2563eb;
+    color:white;
+    border-radius:8px;
+    cursor:pointer;
+}
+
+/* POST */
 .post{
     background:white;
-    border:1px solid #ddd;
+    border-radius:12px;
     margin-bottom:20px;
+    overflow:hidden;
+    box-shadow:0 2px 8px rgba(0,0,0,0.08);
 }
+
 .post-header{
-    padding:10px;
-    font-weight:bold;
+    padding:15px;
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
 }
+
 .post img{
     width:100%;
 }
-.caption{
-    padding:10px;
+
+.post-body{
+    padding:15px;
+}
+
+.action a{
+    text-decoration:none;
+    margin-right:12px;
+    font-size:14px;
+    color:#111827;
+}
+
+.follow-btn{
+    color:#0095f6;
+    font-weight:bold;
+    text-decoration:none;
+    font-size:14px;
+}
+
+.following-btn{
+    color:gray;
+    text-decoration:none;
+    font-size:14px;
 }
 </style>
 </head>
+
 <body>
 
-<div class="navbar">SyifaApp</div>
+<!-- NAVBAR -->
+<div class="navbar">
+    <div class="logo">SyifaApp</div>
+
+    <div class="nav-right">
+        <a href="/profile/">Profile</a>
+        <a href="/logout/">Logout</a>
+    </div>
+</div>
+
 
 <div class="container">
 
-<div class="post">
-<div class="post-header">syifa</div>
-<img src="https://picsum.photos/500/400">
-<div class="caption">🔥 Foto pertama di SyifaApp</div>
+<!-- UPLOAD -->
+<div class="upload-box">
+<form method="POST" enctype="multipart/form-data" action="/upload/">
+{% csrf_token %}
+
+<textarea name="caption" placeholder="Tulis caption..."></textarea>
+<input type="file" name="image" required>
+
+<button type="submit">Upload</button>
+</form>
 </div>
 
+
+<!-- POSTINGAN -->
+{% for post in posts %}
 <div class="post">
-<div class="post-header">temanmu</div>
-<img src="https://picsum.photos/500/401">
-<div class="caption">❤️ Mirip Instagram banget</div>
+
+    <!-- HEADER -->
+    <div class="post-header">
+
+        <b>{{ post.user.username }}</b>
+
+        {% if request.user != post.user %}
+
+            {% if request.user in post.user.followers.all %}
+                <a href="/unfollow/{{ post.user.id }}/"
+                   class="following-btn">
+                   Following
+                </a>
+
+            {% else %}
+                <a href="/follow/{{ post.user.id }}/"
+                   class="follow-btn">
+                   Follow
+                </a>
+            {% endif %}
+
+        {% endif %}
+
+    </div>
+
+
+    <!-- FOTO -->
+    <img src="{{ post.image.url }}">
+
+
+    <!-- BODY -->
+    <div class="post-body">
+
+        <p>{{ post.caption }}</p>
+
+        <div class="action">
+            <a href="/like/{{ post.id }}/">❤️ Like ({{ post.total_likes }})</a>
+
+            {% if request.user == post.user %}
+            <a href="/edit/{{ post.id }}/">✏️ Edit</a>
+            <a href="/delete/{{ post.id }}/">🗑️ Hapus</a>
+            {% endif %}
+        </div>
+
+        <hr>
+
+        <!-- KOMENTAR -->
+        {% for comment in post.comments.all %}
+            <p><b>{{ comment.user.username }}</b> {{ comment.text }}</p>
+        {% endfor %}
+
+        <form method="POST" action="/comment/{{ post.id }}/">
+            {% csrf_token %}
+            <input type="text" name="text" placeholder="Tulis komentar..." style="width:100%;padding:8px;">
+        </form>
+
+    </div>
+
 </div>
+{% endfor %}
 
 </div>
 
