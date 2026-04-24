@@ -172,7 +172,6 @@ width:100%;
 .left{justify-content:flex-start;}
 .right{justify-content:flex-end;}
 
-/* FIX CHAT BUBBLE */
 .bubble{
 display:inline-block;
 max-width:75%;
@@ -335,10 +334,23 @@ Chat dengan {{ selected_user.username }}
 
 </div>
 
-<form method="POST" action="/send-message/{{ selected_user.id }}/" class="chat-form">
+<form method="POST"
+action="/send-message/{{ selected_user.id }}/"
+class="chat-form"
+id="chatForm">
+
 {% csrf_token %}
-<input type="text" name="text" placeholder="Tulis pesan..." required>
+
+<input
+type="text"
+name="text"
+id="chatInput"
+placeholder="Tulis pesan..."
+required
+autocomplete="off">
+
 <button type="submit">Kirim</button>
+
 </form>
 
 {% else %}
@@ -354,16 +366,35 @@ Pilih user di kiri untuk mulai chat 💬
 </div>
 
 <script>
+
+/* auto refresh */
 setTimeout(function(){
 location.reload();
 },7000);
 
+/* auto scroll */
 window.onload=function(){
 let box=document.getElementById("messagesBox");
 if(box){
 box.scrollTop=box.scrollHeight;
 }
 }
+
+/* ENTER = KIRIM */
+const input = document.getElementById("chatInput");
+const form = document.getElementById("chatForm");
+
+if(input && form){
+input.addEventListener("keydown", function(e){
+
+if(e.key === "Enter"){
+e.preventDefault();
+form.submit();
+}
+
+});
+}
+
 </script>
 
 </body>
