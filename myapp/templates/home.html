@@ -1,427 +1,281 @@
 <!DOCTYPE html>
-
 <html lang="id">
-
 <head>
-
 <meta charset="UTF-8">
-
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>SyifaApp</title>
+<title>SyifaApp Pink Luxury</title>
 
 <link rel="preconnect" href="https://fonts.googleapis.com">
-
 <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
 
 <style>
 
-*{margin:0;padding:0;box-sizing:border-box;}
+*{
+margin:0;
+padding:0;
+box-sizing:border-box;
+}
 
 body{
-
 font-family:'Poppins',sans-serif;
-
-background:linear-gradient(180deg,#0f172a,#111827,#1e1b4b);
-
+background:linear-gradient(180deg,#1a0f17,#2b1025,#3d1334,#190d18);
 color:white;
-
-padding-bottom:90px;
-
+padding-bottom:95px;
 }
 
 /* TOPBAR */
-
 .navbar{
-
 position:sticky;
-
 top:0;
-
 z-index:999;
-
 padding:15px 18px;
-
 display:flex;
-
 justify-content:space-between;
-
 align-items:center;
-
+background:rgba(25,13,24,.75);
 backdrop-filter:blur(15px);
-
-background:rgba(17,24,39,.75);
-
+border-bottom:1px solid rgba(255,255,255,.08);
 }
 
 .logo{
-
-font-size:25px;
-
+font-size:27px;
 font-weight:700;
-
-background:linear-gradient(90deg,#ec4899,#8b5cf6,#06b6d4);
-
+background:linear-gradient(90deg,#ff8cc8,#ff4da6,#ffd6eb);
 -webkit-background-clip:text;
-
 -webkit-text-fill-color:transparent;
-
 }
 
 .top-icons a{
-
-color:white;
-
+color:#ffd6eb;
 text-decoration:none;
-
 font-size:21px;
-
 margin-left:14px;
-
 }
 
 /* SEARCH */
-
 .search{
-
 padding:15px;
-
 }
 
 .search input{
-
 width:100%;
-
 padding:13px;
-
 border:none;
-
-border-radius:14px;
-
+border-radius:15px;
 background:rgba(255,255,255,.08);
-
 color:white;
-
+outline:none;
 }
 
 /* WRAP */
-
 .container{
-
 max-width:620px;
-
 margin:auto;
-
 padding:0 15px;
-
 }
 
 /* STORY */
-
 .story-wrap{
-
 display:flex;
-
-gap:15px;
-
+gap:14px;
 overflow:auto;
-
 margin-bottom:20px;
-
 }
 
 .story{
-
 min-width:75px;
-
 text-align:center;
-
 font-size:13px;
-
+color:#ffd6eb;
 }
 
 .story-ring{
-
 width:68px;
-
 height:68px;
-
 border-radius:50%;
-
 padding:3px;
-
-background:linear-gradient(45deg,#ec4899,#f59e0b,#8b5cf6);
-
+background:linear-gradient(45deg,#ff4da6,#ff90cf,#ffd6eb);
+box-shadow:0 0 18px rgba(255,77,166,.35);
 }
 
 .story-ring div{
-
 width:100%;
-
 height:100%;
-
 border-radius:50%;
-
-background:#111827;
-
+background:#2a1422;
 display:flex;
-
 justify-content:center;
-
 align-items:center;
-
 font-size:28px;
-
 }
 
 /* QUICK MENU */
-
 .menu{
-
 display:grid;
-
 grid-template-columns:repeat(4,1fr);
-
 gap:10px;
-
 margin-bottom:20px;
-
 }
 
 .menu div{
-
 background:rgba(255,255,255,.08);
-
 padding:14px;
-
 border-radius:18px;
-
 text-align:center;
-
-font-size:14px;
-
+font-size:13px;
+color:#ffd6eb;
 }
 
 /* UPLOAD */
-
 .upload{
-
-background:rgba(255,255,255,.08);
-
+background:rgba(255,255,255,.07);
 padding:18px;
-
-border-radius:22px;
-
+border-radius:24px;
 margin-bottom:22px;
-
 backdrop-filter:blur(10px);
-
+border:1px solid rgba(255,255,255,.05);
 }
 
 textarea,input[type=file]{
-
 width:100%;
-
 padding:12px;
-
 margin-top:10px;
-
 border:none;
-
 border-radius:12px;
-
 background:rgba(255,255,255,.08);
-
 color:white;
-
+outline:none;
 }
 
 button{
-
 width:100%;
-
 padding:13px;
-
 margin-top:12px;
-
 border:none;
-
 border-radius:14px;
-
-background:linear-gradient(90deg,#ec4899,#8b5cf6);
-
+background:linear-gradient(90deg,#ff4da6,#ff8cc8);
 color:white;
-
 font-weight:700;
-
+cursor:pointer;
+box-shadow:0 0 18px rgba(255,77,166,.35);
 }
 
 /* POST */
-
 .post{
-
-background:rgba(255,255,255,.08);
-
+background:rgba(255,255,255,.07);
 border-radius:24px;
-
 overflow:hidden;
-
 margin-bottom:24px;
-
 backdrop-filter:blur(10px);
-
+border:1px solid rgba(255,255,255,.05);
 }
 
 .post-top{
-
 padding:15px;
-
 display:flex;
-
 justify-content:space-between;
-
 align-items:center;
-
 }
 
-.user{font-weight:700;}
+.user{
+font-weight:700;
+color:#ffd6eb;
+}
 
 .follow{
-
-color:#60a5fa;
-
+color:#ff8cc8;
 text-decoration:none;
-
 font-size:14px;
-
+font-weight:600;
 }
 
 .post img,.post video{
-
 width:100%;
-
 display:block;
-
 }
 
 .post-body{
-
 padding:15px;
-
 }
 
 .actions{
-
 display:flex;
-
 gap:14px;
-
 font-size:20px;
-
 margin-bottom:10px;
-
 }
 
 .actions a{
-
 text-decoration:none;
-
 color:white;
+}
 
+.likes{
+color:#ffd6eb;
+margin-bottom:10px;
+font-size:14px;
+}
+
+.caption{
+margin-bottom:12px;
+line-height:1.5;
 }
 
 .comment{
-
 font-size:14px;
-
 margin-bottom:7px;
-
+color:#ffe4f2;
 }
 
 .comment-box{
-
 width:100%;
-
 padding:11px;
-
 border:none;
-
 border-radius:12px;
-
 background:rgba(255,255,255,.08);
-
 color:white;
-
 margin-top:10px;
-
+outline:none;
 }
 
 /* FLOAT */
-
 .float{
-
 position:fixed;
-
 right:18px;
-
 bottom:92px;
-
 width:60px;
-
 height:60px;
-
 border-radius:50%;
-
-background:linear-gradient(90deg,#ec4899,#8b5cf6);
-
+background:linear-gradient(90deg,#ff4da6,#ff8cc8);
 display:flex;
-
 justify-content:center;
-
 align-items:center;
-
 font-size:30px;
-
-box-shadow:0 0 25px #8b5cf6;
-
+box-shadow:0 0 25px #ff4da6;
 }
 
 /* BOTTOM */
-
 .bottom{
-
 position:fixed;
-
 bottom:0;
-
 left:0;
-
 width:100%;
-
-background:rgba(17,24,39,.92);
-
+background:rgba(25,13,24,.92);
 padding:13px;
-
 display:flex;
-
 justify-content:space-around;
-
 font-size:24px;
-
 backdrop-filter:blur(15px);
-
+border-top:1px solid rgba(255,255,255,.08);
 }
 
 .bottom a{
-
-color:white;
-
+color:#ffd6eb;
 text-decoration:none;
-
 }
 
 </style>
-
 </head>
 
 <body>
@@ -431,85 +285,65 @@ text-decoration:none;
 <div class="logo">SyifaApp</div>
 
 <div class="top-icons">
-
-<a href="#">❤️</a>
-
-<a href="#">💬</a>
-
+<a href="#">💖</a>
+<a href="/chat/">💬</a>
 <a href="/profile/">👤</a>
-
 </div>
 
 </div>
 
 <div class="search">
-
 <input type="text" placeholder="Cari teman, reels, explore...">
-
 </div>
 
 <div class="container">
 
 <!-- STORY -->
-
 <div class="story-wrap">
 
 <div class="story">
-
-<div class="story-ring"><div>👤</div></div>Kamu
-
+<div class="story-ring"><div>👤</div></div>
+Kamu
 </div>
 
 <div class="story">
-
-<div class="story-ring"><div>🌸</div></div>Syifa
-
+<div class="story-ring"><div>🌸</div></div>
+Syifa
 </div>
 
 <div class="story">
-
-<div class="story-ring"><div>🔥</div></div>Bestie
-
+<div class="story-ring"><div>✨</div></div>
+Bestie
 </div>
 
 </div>
 
-<!-- QUICK MENU -->
-
+<!-- MENU -->
 <div class="menu">
-
 <div>🔥 Explore</div>
-
 <div>🎥 Reels</div>
-
 <div>💬 Chat</div>
-
-<div>❤️ Notif</div>
-
+<div>💖 Notif</div>
 </div>
 
 <!-- UPLOAD -->
-
 <div class="upload">
 
 <form method="POST" enctype="multipart/form-data" action="/upload/">
-
 {% csrf_token %}
 
-<textarea name="caption" placeholder="Apa yang kamu pikirkan?"></textarea>
+<textarea name="caption" placeholder="Tulis sesuatu yang manis..."></textarea>
 
 <input type="file" name="image">
-
 <input type="file" name="video">
 
-<button type="submit">Upload</button>
+<button type="submit">Upload Sekarang</button>
 
 </form>
 
 </div>
 
 <!-- POST -->
-
 {% for post in posts %}
 
 <div class="post">
@@ -519,57 +353,46 @@ text-decoration:none;
 <div class="user">{{ post.user.username }}</div>
 
 {% if request.user != post.user %}
-
 <a href="/follow/{{ post.user.id }}/" class="follow">Follow</a>
-
 {% endif %}
 
 </div>
 
 {% if post.image %}
-
 <img src="{{ post.image.url }}">
-
 {% endif %}
 
 {% if post.video %}
-
 <video controls>
-
 <source src="{{ post.video.url }}">
-
 </video>
-
 {% endif %}
 
 <div class="post-body">
 
 <div class="actions">
-
-<a href="/like/{{ post.id }}/">❤️</a>
-
+<a href="/like/{{ post.id }}/">💖</a>
 <a href="#">💬</a>
-
 <a href="#">📤</a>
-
 </div>
 
-<div style="margin-bottom:8px;"><b>{{ post.total_likes }}</b> suka</div>
+<div class="likes">
+<b>{{ post.total_likes }}</b> suka
+</div>
 
-<div style="margin-bottom:12px;">{{ post.caption }}</div>
+<div class="caption">
+{{ post.caption }}
+</div>
 
 {% for comment in post.comments.all %}
-
-<div class="comment"><b>{{ comment.user.username }}</b> {{ comment.text }}</div>
-
+<div class="comment">
+<b>{{ comment.user.username }}</b> {{ comment.text }}
+</div>
 {% endfor %}
 
 <form method="POST" action="/comment/{{ post.id }}/">
-
 {% csrf_token %}
-
 <input type="text" name="text" class="comment-box" placeholder="Tambah komentar...">
-
 </form>
 
 </div>
@@ -583,19 +406,12 @@ text-decoration:none;
 <div class="float">＋</div>
 
 <div class="bottom">
-
 <a href="/home/">🏠</a>
-
-<a href="#">🔍</a>
-
-<a href="#">🎥</a>
-
-<a href="#">💬</a>
-
+<a href="/explore/">🔍</a>
+<a href="/reels/">🎥</a>
+<a href="/chat/">💬</a>
 <a href="/profile/">👤</a>
-
 </div>
 
 </body>
-
 </html>
