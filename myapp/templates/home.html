@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 
-<html lang="en">
+<html lang="id">
 
 <head>
 
@@ -9,6 +9,10 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
 <title>SyifaApp</title>
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
 
 <style>
 
@@ -24,15 +28,23 @@
 
 body{
 
-    font-family:Arial, Helvetica, sans-serif;
+    font-family:'Poppins',sans-serif;
 
-    background:#f3f4f6;
+    background:#f4f6fb;
+
+    color:#111827;
 
 }
 
 /* NAVBAR */
 
 .navbar{
+
+    position:sticky;
+
+    top:0;
+
+    z-index:100;
 
     background:#111827;
 
@@ -46,19 +58,13 @@ body{
 
     align-items:center;
 
-    position:sticky;
-
-    top:0;
-
-    z-index:100;
-
 }
 
 .logo{
 
     font-size:24px;
 
-    font-weight:bold;
+    font-weight:700;
 
 }
 
@@ -66,15 +72,15 @@ body{
 
     text-decoration:none;
 
-    color:white;
-
     margin-left:10px;
 
     padding:8px 14px;
 
-    border-radius:8px;
+    border-radius:10px;
 
     font-size:14px;
+
+    font-weight:600;
 
 }
 
@@ -82,7 +88,7 @@ body{
 
     background:#facc15;
 
-    color:black !important;
+    color:#111;
 
 }
 
@@ -90,17 +96,21 @@ body{
 
     background:#ef4444;
 
+    color:white;
+
 }
 
-/* CONTAINER */
+/* WRAP */
 
 .container{
 
-    max-width:520px;
+    width:100%;
+
+    max-width:620px;
 
     margin:25px auto;
 
-    padding:0 10px;
+    padding:0 15px;
 
 }
 
@@ -112,55 +122,57 @@ body{
 
     padding:20px;
 
-    border-radius:14px;
+    border-radius:18px;
 
-    margin-bottom:20px;
+    box-shadow:0 8px 20px rgba(0,0,0,0.08);
 
-    box-shadow:0 4px 10px rgba(0,0,0,0.08);
+    margin-bottom:25px;
 
 }
 
 .upload-box h2{
 
-    margin-bottom:15px;
-
-    font-size:22px;
+    margin-bottom:12px;
 
 }
 
-.upload-box textarea,
+textarea,
 
-.upload-box input{
+input[type=file],
 
-    width:100%;
-
-    padding:10px;
-
-    margin-top:10px;
-
-    border:1px solid #ddd;
-
-    border-radius:10px;
-
-}
-
-.upload-box button{
+.comment-box{
 
     width:100%;
-
-    margin-top:12px;
 
     padding:12px;
 
+    border:1px solid #ddd;
+
+    border-radius:12px;
+
+    margin-top:10px;
+
+}
+
+button{
+
+    width:100%;
+
+    padding:13px;
+
+    margin-top:12px;
+
     border:none;
 
-    border-radius:10px;
+    border-radius:12px;
 
-    background:#2563eb;
+    background:linear-gradient(90deg,#2563eb,#3b82f6);
 
     color:white;
 
     font-size:16px;
+
+    font-weight:600;
 
     cursor:pointer;
 
@@ -172,19 +184,17 @@ body{
 
     background:white;
 
-    border-radius:14px;
+    border-radius:18px;
 
     overflow:hidden;
 
-    margin-bottom:22px;
+    margin-bottom:25px;
 
-    box-shadow:0 4px 10px rgba(0,0,0,0.08);
+    box-shadow:0 8px 20px rgba(0,0,0,0.08);
 
 }
 
 .post-header{
-
-    padding:15px;
 
     display:flex;
 
@@ -192,29 +202,31 @@ body{
 
     align-items:center;
 
-}
-
-.post-user{
-
-    font-size:18px;
-
-    font-weight:bold;
+    padding:15px;
 
 }
 
-.follow-btn{
+.username{
 
-    color:#0095f6;
+    font-weight:700;
+
+    font-size:17px;
+
+}
+
+.follow{
+
+    color:#2563eb;
 
     text-decoration:none;
 
-    font-weight:bold;
+    font-weight:600;
 
 }
 
-.following-btn{
+.following{
 
-    color:gray;
+    color:#777;
 
     text-decoration:none;
 
@@ -228,7 +240,9 @@ body{
 
     display:block;
 
-    background:black;
+    max-height:650px;
+
+    object-fit:cover;
 
 }
 
@@ -240,19 +254,13 @@ body{
 
 .caption{
 
-    margin-bottom:12px;
+    margin-bottom:10px;
 
-    font-size:15px;
-
-}
-
-.action{
-
-    margin-bottom:12px;
+    line-height:1.5;
 
 }
 
-.action a{
+.actions a{
 
     text-decoration:none;
 
@@ -262,45 +270,35 @@ body{
 
     font-size:14px;
 
+    font-weight:600;
+
 }
 
 .comment{
 
-    margin-bottom:6px;
-
     font-size:14px;
+
+    margin-top:8px;
 
 }
 
-.comment-box{
+hr{
 
-    width:100%;
+    margin:12px 0;
 
-    padding:10px;
+    border:none;
 
-    border:1px solid #ddd;
-
-    border-radius:10px;
-
-    margin-top:10px;
-
-}
-
-.empty{
-
-    color:#777;
-
-    font-size:14px;
+    border-top:1px solid #eee;
 
 }
 
 /* MOBILE */
 
-@media(max-width:600px){
+@media(max-width:700px){
 
     .navbar{
 
-        padding:12px 15px;
+        padding:12px;
 
     }
 
@@ -326,11 +324,9 @@ body{
 
 <body>
 
-<!-- NAVBAR -->
-
 <div class="navbar">
 
-    <div class="logo">SyifaApp</div>
+    <div class="logo">SyifaApp ✨</div>
 
     <div class="nav-right">
 
@@ -344,7 +340,7 @@ body{
 
 <div class="container">
 
-<!-- UPLOAD -->
+<!-- Upload -->
 
 <div class="upload-box">
 
@@ -354,121 +350,95 @@ body{
 
 <h2>Buat Postingan 📷🎥</h2>
 
-<textarea name="caption" rows="3" placeholder="Tulis caption..."></textarea>
+<textarea name="caption" placeholder="Tulis caption..."></textarea>
 
-<input type="file" name="image" accept="image/*">
+<input type="file" name="image">
 
-<input type="file" name="video" accept="video/*">
+<input type="file" name="video">
 
-<button type="submit">Upload</button>
+<button type="submit">Upload Sekarang</button>
 
 </form>
 
 </div>
 
-<!-- FEED -->
+<!-- Postingan -->
 
 {% for post in posts %}
 
 <div class="post">
 
-    <!-- HEADER -->
+<div class="post-header">
 
-    <div class="post-header">
+<div class="username">{{ post.user.username }}</div>
 
-        <div class="post-user">{{ post.user.username }}</div>
+{% if request.user != post.user %}
 
-        {% if request.user != post.user %}
+    <a href="/follow/{{ post.user.id }}/" class="follow">Follow</a>
 
-            {% if request.user in post.user.followers.all %}
+{% endif %}
 
-                <a href="/unfollow/{{ post.user.id }}/" class="following-btn">Following</a>
+</div>
 
-            {% else %}
+{% if post.image %}
 
-                <a href="/follow/{{ post.user.id }}/" class="follow-btn">Follow</a>
+<img src="{{ post.image.url }}">
 
-            {% endif %}
+{% endif %}
 
-        {% endif %}
+{% if post.video %}
 
-    </div>
+<video controls>
 
-    <!-- IMAGE -->
+<source src="{{ post.video.url }}">
 
-    {% if post.image %}
+</video>
 
-        <img src="{{ post.image.url }}">
+{% endif %}
 
-    {% endif %}
+<div class="post-body">
 
-    <!-- VIDEO -->
+<div class="caption">{{ post.caption }}</div>
 
-    {% if post.video %}
+<div class="actions">
 
-        <video controls>
+<a href="/like/{{ post.id }}/">❤️ {{ post.total_likes }}</a>
 
-            <source src="{{ post.video.url }}">
+{% if request.user == post.user %}
 
-        </video>
+<a href="/edit/{{ post.id }}/">✏️ Edit</a>
 
-    {% endif %}
+<a href="/delete/{{ post.id }}/">🗑️ Hapus</a>
 
-    <!-- BODY -->
+{% endif %}
 
-    <div class="post-body">
+</div>
 
-        <div class="caption">{{ post.caption }}</div>
+<hr>
 
-        <div class="action">
+{% for comment in post.comments.all %}
 
-            <a href="/like/{{ post.id }}/">❤️ Like ({{ post.total_likes }})</a>
+<div class="comment">
 
-            {% if request.user == post.user %}
+<b>{{ comment.user.username }}</b> {{ comment.text }}
 
-                <a href="/edit/{{ post.id }}/">✏️ Edit</a>
+</div>
 
-                <a href="/delete/{{ post.id }}/">🗑️ Hapus</a>
+{% empty %}
 
-            {% endif %}
+<div class="comment">Belum ada komentar</div>
 
-        </div>
+{% endfor %}
 
-        <hr style="margin:10px 0; border:none; border-top:1px solid #eee;">
+<form method="POST" action="/comment/{{ post.id }}/">
 
-        <!-- KOMENTAR -->
+{% csrf_token %}
 
-        {% for comment in post.comments.all %}
+<input type="text" name="text" placeholder="Tulis komentar..." class="comment-box">
 
-            <div class="comment">
+</form>
 
-                <b>{{ comment.user.username }}</b> {{ comment.text }}
-
-            </div>
-
-        {% empty %}
-
-            <div class="empty">Belum ada komentar</div>
-
-        {% endfor %}
-
-        <form method="POST" action="/comment/{{ post.id }}/">
-
-            {% csrf_token %}
-
-            <input
-
-                type="text"
-
-                name="text"
-
-                placeholder="Tulis komentar..."
-
-                class="comment-box">
-
-        </form>
-
-    </div>
+</div>
 
 </div>
 
