@@ -8,7 +8,7 @@
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>SyifaApp Ultra</title>
+<title>SyifaApp</title>
 
 <link rel="preconnect" href="https://fonts.googleapis.com">
 
@@ -22,11 +22,11 @@ body{
 
 font-family:'Poppins',sans-serif;
 
-background:#0b1120;
+background:linear-gradient(180deg,#0f172a,#111827,#1e1b4b);
 
 color:white;
 
-padding-bottom:85px;
+padding-bottom:90px;
 
 }
 
@@ -40,9 +40,7 @@ top:0;
 
 z-index:999;
 
-background:#111827;
-
-padding:14px 18px;
+padding:15px 18px;
 
 display:flex;
 
@@ -50,13 +48,15 @@ justify-content:space-between;
 
 align-items:center;
 
-box-shadow:0 5px 20px rgba(0,0,0,.4);
+backdrop-filter:blur(15px);
+
+background:rgba(17,24,39,.75);
 
 }
 
 .logo{
 
-font-size:24px;
+font-size:25px;
 
 font-weight:700;
 
@@ -74,7 +74,7 @@ color:white;
 
 text-decoration:none;
 
-font-size:20px;
+font-size:21px;
 
 margin-left:14px;
 
@@ -92,13 +92,13 @@ padding:15px;
 
 width:100%;
 
-padding:12px;
+padding:13px;
 
 border:none;
 
 border-radius:14px;
 
-background:#1e293b;
+background:rgba(255,255,255,.08);
 
 color:white;
 
@@ -136,6 +136,8 @@ min-width:75px;
 
 text-align:center;
 
+font-size:13px;
+
 }
 
 .story-ring{
@@ -149,8 +151,6 @@ border-radius:50%;
 padding:3px;
 
 background:linear-gradient(45deg,#ec4899,#f59e0b,#8b5cf6);
-
-animation:spin 5s linear infinite;
 
 }
 
@@ -174,11 +174,31 @@ font-size:28px;
 
 }
 
-@keyframes spin{
+/* QUICK MENU */
 
-0%{transform:rotate(0);}
+.menu{
 
-100%{transform:rotate(360deg);}
+display:grid;
+
+grid-template-columns:repeat(4,1fr);
+
+gap:10px;
+
+margin-bottom:20px;
+
+}
+
+.menu div{
+
+background:rgba(255,255,255,.08);
+
+padding:14px;
+
+border-radius:18px;
+
+text-align:center;
+
+font-size:14px;
 
 }
 
@@ -186,13 +206,15 @@ font-size:28px;
 
 .upload{
 
-background:#111827;
+background:rgba(255,255,255,.08);
 
 padding:18px;
 
-border-radius:20px;
+border-radius:22px;
 
 margin-bottom:22px;
+
+backdrop-filter:blur(10px);
 
 }
 
@@ -208,7 +230,7 @@ border:none;
 
 border-radius:12px;
 
-background:#1e293b;
+background:rgba(255,255,255,.08);
 
 color:white;
 
@@ -238,15 +260,15 @@ font-weight:700;
 
 .post{
 
-background:#111827;
+background:rgba(255,255,255,.08);
 
 border-radius:24px;
 
 overflow:hidden;
 
-margin-bottom:25px;
+margin-bottom:24px;
 
-box-shadow:0 8px 20px rgba(0,0,0,.35);
+backdrop-filter:blur(10px);
 
 }
 
@@ -262,11 +284,7 @@ align-items:center;
 
 }
 
-.user{
-
-font-weight:700;
-
-}
+.user{font-weight:700;}
 
 .follow{
 
@@ -292,45 +310,23 @@ padding:15px;
 
 }
 
-.like-btn{
-
-color:#f43f5e;
-
-font-size:20px;
-
-text-decoration:none;
-
-animation:bounce 1s infinite;
-
-}
-
-@keyframes bounce{
-
-0%,100%{transform:translateY(0);}
-
-50%{transform:translateY(-3px);}
-
-}
-
-.row{
+.actions{
 
 display:flex;
 
-gap:15px;
+gap:14px;
+
+font-size:20px;
 
 margin-bottom:10px;
 
-align-items:center;
-
 }
 
-.row a{
+.actions a{
 
 text-decoration:none;
 
 color:white;
-
-font-size:14px;
 
 }
 
@@ -338,7 +334,7 @@ font-size:14px;
 
 font-size:14px;
 
-margin-bottom:6px;
+margin-bottom:7px;
 
 }
 
@@ -352,7 +348,7 @@ border:none;
 
 border-radius:12px;
 
-background:#1e293b;
+background:rgba(255,255,255,.08);
 
 color:white;
 
@@ -360,7 +356,7 @@ margin-top:10px;
 
 }
 
-/* FLOATING */
+/* FLOAT */
 
 .float{
 
@@ -390,7 +386,7 @@ box-shadow:0 0 25px #8b5cf6;
 
 }
 
-/* BOTTOM NAV */
+/* BOTTOM */
 
 .bottom{
 
@@ -402,15 +398,17 @@ left:0;
 
 width:100%;
 
-background:#111827;
+background:rgba(17,24,39,.92);
 
-padding:12px;
+padding:13px;
 
 display:flex;
 
 justify-content:space-around;
 
 font-size:24px;
+
+backdrop-filter:blur(15px);
 
 }
 
@@ -446,7 +444,7 @@ text-decoration:none;
 
 <div class="search">
 
-<input type="text" placeholder="Cari user / reels / teman...">
+<input type="text" placeholder="Cari teman, reels, explore...">
 
 </div>
 
@@ -458,27 +456,35 @@ text-decoration:none;
 
 <div class="story">
 
-<div class="story-ring"><div>👤</div></div>
-
-<small>Kamu</small>
+<div class="story-ring"><div>👤</div></div>Kamu
 
 </div>
 
 <div class="story">
 
-<div class="story-ring"><div>🌸</div></div>
-
-<small>Syifa</small>
+<div class="story-ring"><div>🌸</div></div>Syifa
 
 </div>
 
 <div class="story">
 
-<div class="story-ring"><div>🔥</div></div>
-
-<small>Bestie</small>
+<div class="story-ring"><div>🔥</div></div>Bestie
 
 </div>
+
+</div>
+
+<!-- QUICK MENU -->
+
+<div class="menu">
+
+<div>🔥 Explore</div>
+
+<div>🎥 Reels</div>
+
+<div>💬 Chat</div>
+
+<div>❤️ Notif</div>
 
 </div>
 
@@ -496,7 +502,7 @@ text-decoration:none;
 
 <input type="file" name="video">
 
-<button type="submit">Upload Sekarang</button>
+<button type="submit">Upload</button>
 
 </form>
 
@@ -538,33 +544,19 @@ text-decoration:none;
 
 <div class="post-body">
 
-<div class="row">
+<div class="actions">
 
-<a href="/like/{{ post.id }}/" class="like-btn">❤️</a>
+<a href="/like/{{ post.id }}/">❤️</a>
 
 <a href="#">💬</a>
 
-{% if request.user == post.user %}
-
-<a href="/edit/{{ post.id }}/">✏️</a>
-
-<a href="/delete/{{ post.id }}/">🗑️</a>
-
-{% endif %}
+<a href="#">📤</a>
 
 </div>
 
-<div style="margin-bottom:10px;">
+<div style="margin-bottom:8px;"><b>{{ post.total_likes }}</b> suka</div>
 
-<b>{{ post.total_likes }}</b> suka
-
-</div>
-
-<div style="margin-bottom:12px;">
-
-{{ post.caption }}
-
-</div>
+<div style="margin-bottom:12px;">{{ post.caption }}</div>
 
 {% for comment in post.comments.all %}
 
@@ -598,7 +590,7 @@ text-decoration:none;
 
 <a href="#">🎥</a>
 
-<a href="#">❤️</a>
+<a href="#">💬</a>
 
 <a href="/profile/">👤</a>
 
