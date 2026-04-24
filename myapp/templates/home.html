@@ -8,7 +8,7 @@
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>SyifaApp</title>
+<title>SyifaApp Ultra</title>
 
 <link rel="preconnect" href="https://fonts.googleapis.com">
 
@@ -16,25 +16,17 @@
 
 <style>
 
-*{
-
-margin:0;
-
-padding:0;
-
-box-sizing:border-box;
-
-}
+*{margin:0;padding:0;box-sizing:border-box;}
 
 body{
 
 font-family:'Poppins',sans-serif;
 
-background:#0f172a;
+background:#0b1120;
 
 color:white;
 
-padding-bottom:80px;
+padding-bottom:85px;
 
 }
 
@@ -50,7 +42,7 @@ z-index:999;
 
 background:#111827;
 
-padding:14px 20px;
+padding:14px 18px;
 
 display:flex;
 
@@ -58,7 +50,7 @@ justify-content:space-between;
 
 align-items:center;
 
-box-shadow:0 2px 10px rgba(0,0,0,.4);
+box-shadow:0 5px 20px rgba(0,0,0,.4);
 
 }
 
@@ -68,7 +60,7 @@ font-size:24px;
 
 font-weight:700;
 
-background:linear-gradient(90deg,#ec4899,#8b5cf6);
+background:linear-gradient(90deg,#ec4899,#8b5cf6,#06b6d4);
 
 -webkit-background-clip:text;
 
@@ -76,27 +68,27 @@ background:linear-gradient(90deg,#ec4899,#8b5cf6);
 
 }
 
-.nav-right a{
+.top-icons a{
 
 color:white;
 
 text-decoration:none;
 
-margin-left:12px;
+font-size:20px;
 
-font-size:14px;
+margin-left:14px;
 
 }
 
 /* SEARCH */
 
-.search-box{
+.search{
 
 padding:15px;
 
 }
 
-.search-box input{
+.search input{
 
 width:100%;
 
@@ -112,7 +104,7 @@ color:white;
 
 }
 
-/* CONTENT */
+/* WRAP */
 
 .container{
 
@@ -126,7 +118,7 @@ padding:0 15px;
 
 /* STORY */
 
-.story-box{
+.story-wrap{
 
 display:flex;
 
@@ -140,29 +132,29 @@ margin-bottom:20px;
 
 .story{
 
-min-width:70px;
+min-width:75px;
 
 text-align:center;
 
 }
 
-.story-circle{
+.story-ring{
 
-width:65px;
+width:68px;
 
-height:65px;
+height:68px;
 
 border-radius:50%;
 
-background:linear-gradient(45deg,#ec4899,#f59e0b);
-
 padding:3px;
 
-margin:auto;
+background:linear-gradient(45deg,#ec4899,#f59e0b,#8b5cf6);
+
+animation:spin 5s linear infinite;
 
 }
 
-.story-circle div{
+.story-ring div{
 
 width:100%;
 
@@ -182,17 +174,25 @@ font-size:28px;
 
 }
 
+@keyframes spin{
+
+0%{transform:rotate(0);}
+
+100%{transform:rotate(360deg);}
+
+}
+
 /* UPLOAD */
 
-.upload-box{
+.upload{
 
 background:#111827;
 
-padding:20px;
+padding:18px;
 
 border-radius:20px;
 
-margin-bottom:20px;
+margin-bottom:22px;
 
 }
 
@@ -218,9 +218,9 @@ button{
 
 width:100%;
 
-margin-top:12px;
-
 padding:13px;
+
+margin-top:12px;
 
 border:none;
 
@@ -230,7 +230,7 @@ background:linear-gradient(90deg,#ec4899,#8b5cf6);
 
 color:white;
 
-font-weight:600;
+font-weight:700;
 
 }
 
@@ -240,15 +240,17 @@ font-weight:600;
 
 background:#111827;
 
-border-radius:22px;
+border-radius:24px;
 
 overflow:hidden;
 
 margin-bottom:25px;
 
+box-shadow:0 8px 20px rgba(0,0,0,.35);
+
 }
 
-.post-header{
+.post-top{
 
 padding:15px;
 
@@ -260,7 +262,7 @@ align-items:center;
 
 }
 
-.username{
+.user{
 
 font-weight:700;
 
@@ -272,11 +274,11 @@ color:#60a5fa;
 
 text-decoration:none;
 
+font-size:14px;
+
 }
 
-.post img,
-
-.post video{
+.post img,.post video{
 
 width:100%;
 
@@ -290,7 +292,27 @@ padding:15px;
 
 }
 
-.actions{
+.like-btn{
+
+color:#f43f5e;
+
+font-size:20px;
+
+text-decoration:none;
+
+animation:bounce 1s infinite;
+
+}
+
+@keyframes bounce{
+
+0%,100%{transform:translateY(0);}
+
+50%{transform:translateY(-3px);}
+
+}
+
+.row{
 
 display:flex;
 
@@ -298,23 +320,17 @@ gap:15px;
 
 margin-bottom:10px;
 
+align-items:center;
+
 }
 
-.actions a{
+.row a{
 
 text-decoration:none;
 
 color:white;
 
 font-size:14px;
-
-}
-
-.like{
-
-color:#f43f5e;
-
-font-size:18px;
 
 }
 
@@ -344,19 +360,19 @@ margin-top:10px;
 
 }
 
-/* FLOATING BUTTON */
+/* FLOATING */
 
-.floating{
+.float{
 
 position:fixed;
 
-right:20px;
+right:18px;
 
-bottom:90px;
+bottom:92px;
 
-width:58px;
+width:60px;
 
-height:58px;
+height:60px;
 
 border-radius:50%;
 
@@ -370,13 +386,13 @@ align-items:center;
 
 font-size:30px;
 
-box-shadow:0 8px 20px rgba(0,0,0,.4);
+box-shadow:0 0 25px #8b5cf6;
 
 }
 
 /* BOTTOM NAV */
 
-.bottom-nav{
+.bottom{
 
 position:fixed;
 
@@ -398,11 +414,11 @@ font-size:24px;
 
 }
 
-.bottom-nav a{
-
-text-decoration:none;
+.bottom a{
 
 color:white;
+
+text-decoration:none;
 
 }
 
@@ -416,19 +432,21 @@ color:white;
 
 <div class="logo">SyifaApp</div>
 
-<div class="nav-right">
+<div class="top-icons">
+
+<a href="#">❤️</a>
+
+<a href="#">💬</a>
 
 <a href="/profile/">👤</a>
 
-<a href="/logout/">🚪</a>
-
 </div>
 
 </div>
 
-<div class="search-box">
+<div class="search">
 
-<input type="text" placeholder="Cari user...">
+<input type="text" placeholder="Cari user / reels / teman...">
 
 </div>
 
@@ -436,11 +454,11 @@ color:white;
 
 <!-- STORY -->
 
-<div class="story-box">
+<div class="story-wrap">
 
 <div class="story">
 
-<div class="story-circle"><div>👤</div></div>
+<div class="story-ring"><div>👤</div></div>
 
 <small>Kamu</small>
 
@@ -448,7 +466,7 @@ color:white;
 
 <div class="story">
 
-<div class="story-circle"><div>🌸</div></div>
+<div class="story-ring"><div>🌸</div></div>
 
 <small>Syifa</small>
 
@@ -456,9 +474,9 @@ color:white;
 
 <div class="story">
 
-<div class="story-circle"><div>🔥</div></div>
+<div class="story-ring"><div>🔥</div></div>
 
-<small>Teman</small>
+<small>Bestie</small>
 
 </div>
 
@@ -466,19 +484,19 @@ color:white;
 
 <!-- UPLOAD -->
 
-<div class="upload-box">
+<div class="upload">
 
 <form method="POST" enctype="multipart/form-data" action="/upload/">
 
 {% csrf_token %}
 
-<textarea name="caption" placeholder="Tulis caption..."></textarea>
+<textarea name="caption" placeholder="Apa yang kamu pikirkan?"></textarea>
 
 <input type="file" name="image">
 
 <input type="file" name="video">
 
-<button type="submit">Upload</button>
+<button type="submit">Upload Sekarang</button>
 
 </form>
 
@@ -490,9 +508,9 @@ color:white;
 
 <div class="post">
 
-<div class="post-header">
+<div class="post-top">
 
-<div class="username">{{ post.user.username }}</div>
+<div class="user">{{ post.user.username }}</div>
 
 {% if request.user != post.user %}
 
@@ -520,9 +538,11 @@ color:white;
 
 <div class="post-body">
 
-<div class="actions">
+<div class="row">
 
-<a href="/like/{{ post.id }}/" class="like">❤️ {{ post.total_likes }}</a>
+<a href="/like/{{ post.id }}/" class="like-btn">❤️</a>
+
+<a href="#">💬</a>
 
 {% if request.user == post.user %}
 
@@ -534,7 +554,17 @@ color:white;
 
 </div>
 
-<div style="margin-bottom:10px;">{{ post.caption }}</div>
+<div style="margin-bottom:10px;">
+
+<b>{{ post.total_likes }}</b> suka
+
+</div>
+
+<div style="margin-bottom:12px;">
+
+{{ post.caption }}
+
+</div>
 
 {% for comment in post.comments.all %}
 
@@ -546,7 +576,7 @@ color:white;
 
 {% csrf_token %}
 
-<input type="text" name="text" placeholder="Komentar..." class="comment-box">
+<input type="text" name="text" class="comment-box" placeholder="Tambah komentar...">
 
 </form>
 
@@ -558,19 +588,17 @@ color:white;
 
 </div>
 
-<!-- FLOAT -->
+<div class="float">＋</div>
 
-<div class="floating">＋</div>
-
-<!-- BOTTOM NAV -->
-
-<div class="bottom-nav">
+<div class="bottom">
 
 <a href="/home/">🏠</a>
 
 <a href="#">🔍</a>
 
 <a href="#">🎥</a>
+
+<a href="#">❤️</a>
 
 <a href="/profile/">👤</a>
 
