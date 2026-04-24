@@ -42,7 +42,7 @@ class Post(models.Model):
         return self.likes.count()
 
     def __str__(self):
-        return f"{self.user.username} - {self.created_at.strftime('%d/%m/%Y')}"
+        return self.user.username
 
 
 # =========================
@@ -68,11 +68,11 @@ class Comment(models.Model):
     )
 
     def __str__(self):
-        return f"{self.user.username}: {self.text[:20]}"
+        return self.user.username
 
 
 # =========================
-# PROFILE PREMIUM
+# PROFILE
 # =========================
 class Profile(models.Model):
 
@@ -128,7 +128,7 @@ class Follow(models.Model):
 
 
 # =========================
-# STORY PREMIUM
+# STORY
 # =========================
 class Story(models.Model):
 
@@ -159,4 +159,38 @@ class Story(models.Model):
         return timezone.now() < self.expires_at
 
     def __str__(self):
-        return f"Story {self.user.username}"
+        return self.user.username
+
+
+# =========================
+# CHAT MESSAGE PREMIUM
+# =========================
+class Message(models.Model):
+
+    sender = models.ForeignKey(
+        User,
+        on_delete=models.CASCADE,
+        related_name='sent_messages'
+    )
+
+    receiver = models.ForeignKey(
+        User,
+        on_delete=models.CASCADE,
+        related_name='received_messages'
+    )
+
+    text = models.TextField()
+
+    created_at = models.DateTimeField(
+        auto_now_add=True
+    )
+
+    is_read = models.BooleanField(
+        default=False
+    )
+
+    class Meta:
+        ordering = ['created_at']
+
+    def __str__(self):
+        return f"{self.sender.username} -> {self.receiver.username}"
