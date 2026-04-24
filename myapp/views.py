@@ -2,13 +2,14 @@ from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.models import User
 from django.contrib.auth.decorators import login_required
+from django.utils import timezone
 
-from .models import Post, Comment, Profile, Follow
+from .models import Post, Comment, Profile, Follow, Story
 
 
-# ==================================
+# =========================
 # REGISTER
-# ==================================
+# =========================
 def register_view(request):
     if request.method == "POST":
         username = request.POST['username']
@@ -31,9 +32,9 @@ def register_view(request):
     return render(request, 'register.html')
 
 
-# ==================================
+# =========================
 # LOGIN
-# ==================================
+# =========================
 def login_view(request):
     if request.method == "POST":
         username = request.POST['username']
@@ -56,29 +57,33 @@ def login_view(request):
     return render(request, 'login.html')
 
 
-# ==================================
+# =========================
 # LOGOUT
-# ==================================
+# =========================
 def logout_view(request):
     logout(request)
     return redirect('login')
 
 
-# ==================================
-# HOME
-# ==================================
+# =========================
+# HOME PREMIUM
+# =========================
 @login_required
 def home(request):
     posts = Post.objects.all().order_by('-id')
+    stories = Story.objects.filter(
+        expires_at__gt=timezone.now()
+    ).order_by('-id')
 
     return render(request, 'home.html', {
-        'posts': posts
+        'posts': posts,
+        'stories': stories
     })
 
 
-# ==================================
+# =========================
 # EXPLORE
-# ==================================
+# =========================
 @login_required
 def explore_view(request):
     posts = Post.objects.all().order_by('-id')
@@ -88,29 +93,37 @@ def explore_view(request):
     })
 
 
-# ==================================
+# =========================
 # REELS
-# ==================================
+# =========================
 @login_required
 def reels_view(request):
-    posts = Post.objects.exclude(video='').order_by('-id')
+    posts = Post.objects.exclude(
+        video=''
+    ).exclude(
+        video=None
+    ).order_by('-id')
 
     return render(request, 'reels.html', {
         'posts': posts
     })
 
 
-# ==================================
+# =========================
 # CHAT
-# ==================================
+# =========================
 @login_required
 def chat_view(request):
-    return render(request, 'chat.html')
+    users = User.objects.exclude(id=request.user.id)
+
+    return render(request, 'chat.html', {
+        'users': users
+    })
 
 
-# ==================================
-# UPLOAD FOTO / VIDEO
-# ==================================
+# =========================
+# UPLOAD POST
+# =========================
 @login_required
 def upload_post(request):
     if request.method == "POST":
@@ -128,9 +141,26 @@ def upload_post(request):
     return redirect('home')
 
 
-# ==================================
+# =========================
+# UPLOAD STORY
+# =========================
+@login_required
+def upload_story(request):
+    if request.method == "POST":
+        image = request.FILES.get('image')
+
+        if image:
+            Story.objects.create(
+                user=request.user,
+                image=image
+            )
+
+    return redirect('home')
+
+
+# =========================
 # LIKE
-# ==================================
+# =========================
 @login_required
 def like_post(request, post_id):
     post = get_object_or_404(Post, id=post_id)
@@ -143,9 +173,9 @@ def like_post(request, post_id):
     return redirect('home')
 
 
-# ==================================
+# =========================
 # DELETE
-# ==================================
+# =========================
 @login_required
 def delete_post(request, post_id):
     post = get_object_or_404(Post, id=post_id)
@@ -156,9 +186,9 @@ def delete_post(request, post_id):
     return redirect('home')
 
 
-# ==================================
+# =========================
 # EDIT
-# ==================================
+# =========================
 @login_required
 def edit_post(request, post_id):
     post = get_object_or_404(Post, id=post_id)
@@ -176,9 +206,9 @@ def edit_post(request, post_id):
     })
 
 
-# ==================================
-# KOMENTAR
-# ==================================
+# =========================
+# COMMENT
+# =========================
 @login_required
 def add_comment(request, post_id):
     if request.method == "POST":
@@ -195,9 +225,9 @@ def add_comment(request, post_id):
     return redirect('home')
 
 
-# ==================================
+# =========================
 # PROFILE
-# ==================================
+# =========================
 @login_required
 def profile_view(request):
     profile, created = Profile.objects.get_or_create(
@@ -224,9 +254,9 @@ def profile_view(request):
     })
 
 
-# ==================================
+# =========================
 # UPDATE PROFILE
-# ==================================
+# =========================
 @login_required
 def update_profile(request):
     profile, created = Profile.objects.get_or_create(
@@ -246,9 +276,9 @@ def update_profile(request):
     return redirect('profile')
 
 
-# ==================================
+# =========================
 # FOLLOW
-# ==================================
+# =========================
 @login_required
 def follow_user(request, user_id):
     target = get_object_or_404(User, id=user_id)
@@ -262,9 +292,9 @@ def follow_user(request, user_id):
     return redirect('home')
 
 
-# ==================================
+# =========================
 # UNFOLLOW
-# ==================================
+# =========================
 @login_required
 def unfollow_user(request, user_id):
     target = get_object_or_404(User, id=user_id)
