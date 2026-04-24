@@ -12,27 +12,27 @@
 
 <link rel="preconnect" href="https://fonts.googleapis.com">
 
-<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
 
 <style>
 
 *{
 
-    margin:0;
+margin:0;
 
-    padding:0;
+padding:0;
 
-    box-sizing:border-box;
+box-sizing:border-box;
 
 }
 
 body{
 
-    font-family:'Poppins',sans-serif;
+font-family:'Poppins',sans-serif;
 
-    background:#f4f6fb;
+background:linear-gradient(to bottom,#f8fafc,#eef2ff);
 
-    color:#111827;
+color:#111827;
 
 }
 
@@ -40,63 +40,69 @@ body{
 
 .navbar{
 
-    position:sticky;
+position:sticky;
 
-    top:0;
+top:0;
 
-    z-index:100;
+z-index:999;
 
-    background:#111827;
+background:white;
 
-    color:white;
+padding:14px 30px;
 
-    padding:15px 25px;
+display:flex;
 
-    display:flex;
+justify-content:space-between;
 
-    justify-content:space-between;
+align-items:center;
 
-    align-items:center;
+box-shadow:0 2px 15px rgba(0,0,0,.07);
 
 }
 
 .logo{
 
-    font-size:24px;
+font-size:28px;
 
-    font-weight:700;
+font-weight:700;
+
+background:linear-gradient(90deg,#ec4899,#8b5cf6);
+
+-webkit-background-clip:text;
+
+-webkit-text-fill-color:transparent;
 
 }
 
 .nav-right a{
 
-    text-decoration:none;
+text-decoration:none;
 
-    margin-left:10px;
+padding:10px 15px;
 
-    padding:8px 14px;
+border-radius:12px;
 
-    border-radius:10px;
+font-size:14px;
 
-    font-size:14px;
+font-weight:600;
 
-    font-weight:600;
-
-}
-
-.profile-btn{
-
-    background:#facc15;
-
-    color:#111;
+margin-left:10px;
 
 }
 
-.logout-btn{
+.profile{
 
-    background:#ef4444;
+background:#e0e7ff;
 
-    color:white;
+color:#4338ca;
+
+}
+
+.logout{
+
+background:#fee2e2;
+
+color:#dc2626;
 
 }
 
@@ -104,77 +110,133 @@ body{
 
 .container{
 
-    width:100%;
+max-width:650px;
 
-    max-width:620px;
+margin:auto;
 
-    margin:25px auto;
-
-    padding:0 15px;
+padding:25px 15px;
 
 }
 
-/* UPLOAD BOX */
+/* STORY */
+
+.story-box{
+
+display:flex;
+
+gap:15px;
+
+overflow:auto;
+
+padding-bottom:15px;
+
+margin-bottom:20px;
+
+}
+
+.story{
+
+text-align:center;
+
+min-width:70px;
+
+}
+
+.story-circle{
+
+width:65px;
+
+height:65px;
+
+border-radius:50%;
+
+padding:3px;
+
+background:linear-gradient(45deg,#ec4899,#f59e0b);
+
+}
+
+.story-circle div{
+
+width:100%;
+
+height:100%;
+
+border-radius:50%;
+
+background:white;
+
+display:flex;
+
+justify-content:center;
+
+align-items:center;
+
+font-size:28px;
+
+}
+
+/* UPLOAD */
 
 .upload-box{
 
-    background:white;
+background:white;
 
-    padding:20px;
+padding:22px;
 
-    border-radius:18px;
+border-radius:20px;
 
-    box-shadow:0 8px 20px rgba(0,0,0,0.08);
+box-shadow:0 10px 30px rgba(0,0,0,.08);
 
-    margin-bottom:25px;
+margin-bottom:25px;
 
 }
 
 .upload-box h2{
 
-    margin-bottom:12px;
+margin-bottom:15px;
+
+font-size:22px;
 
 }
 
-textarea,
+textarea,input[type=file]{
 
-input[type=file],
+width:100%;
 
-.comment-box{
+padding:12px;
 
-    width:100%;
+margin-top:10px;
 
-    padding:12px;
+border:1px solid #ddd;
 
-    border:1px solid #ddd;
+border-radius:12px;
 
-    border-radius:12px;
-
-    margin-top:10px;
+font-family:inherit;
 
 }
 
 button{
 
-    width:100%;
+width:100%;
 
-    padding:13px;
+margin-top:12px;
 
-    margin-top:12px;
+padding:13px;
 
-    border:none;
+border:none;
 
-    border-radius:12px;
+border-radius:14px;
 
-    background:linear-gradient(90deg,#2563eb,#3b82f6);
+background:linear-gradient(90deg,#ec4899,#8b5cf6);
 
-    color:white;
+color:white;
 
-    font-size:16px;
+font-weight:600;
 
-    font-weight:600;
+font-size:15px;
 
-    cursor:pointer;
+cursor:pointer;
 
 }
 
@@ -182,53 +244,45 @@ button{
 
 .post{
 
-    background:white;
+background:white;
 
-    border-radius:18px;
+border-radius:22px;
 
-    overflow:hidden;
+overflow:hidden;
 
-    margin-bottom:25px;
+margin-bottom:28px;
 
-    box-shadow:0 8px 20px rgba(0,0,0,0.08);
+box-shadow:0 10px 30px rgba(0,0,0,.08);
 
 }
 
 .post-header{
 
-    display:flex;
+padding:15px;
 
-    justify-content:space-between;
+display:flex;
 
-    align-items:center;
+justify-content:space-between;
 
-    padding:15px;
+align-items:center;
 
 }
 
 .username{
 
-    font-weight:700;
+font-weight:700;
 
-    font-size:17px;
+font-size:16px;
 
 }
 
 .follow{
 
-    color:#2563eb;
+text-decoration:none;
 
-    text-decoration:none;
+color:#2563eb;
 
-    font-weight:600;
-
-}
-
-.following{
-
-    color:#777;
-
-    text-decoration:none;
+font-weight:600;
 
 }
 
@@ -236,85 +290,91 @@ button{
 
 .post video{
 
-    width:100%;
+width:100%;
 
-    display:block;
+max-height:650px;
 
-    max-height:650px;
+object-fit:cover;
 
-    object-fit:cover;
+display:block;
 
 }
 
 .post-body{
 
-    padding:15px;
+padding:16px;
 
 }
 
-.caption{
+.actions{
 
-    margin-bottom:10px;
+display:flex;
 
-    line-height:1.5;
+gap:15px;
+
+margin-bottom:12px;
+
+font-size:14px;
 
 }
 
 .actions a{
 
-    text-decoration:none;
+text-decoration:none;
 
-    margin-right:12px;
+color:#111827;
 
-    color:#111827;
+font-weight:600;
 
-    font-size:14px;
+}
 
-    font-weight:600;
+.caption{
+
+font-size:14px;
+
+margin-bottom:12px;
+
+line-height:1.6;
 
 }
 
 .comment{
 
-    font-size:14px;
+font-size:14px;
 
-    margin-top:8px;
+margin-bottom:7px;
 
 }
 
-hr{
+.comment-box{
 
-    margin:12px 0;
+width:100%;
 
-    border:none;
+padding:11px;
 
-    border-top:1px solid #eee;
+border:1px solid #ddd;
+
+border-radius:12px;
+
+margin-top:10px;
 
 }
 
 /* MOBILE */
 
-@media(max-width:700px){
+@media(max-width:600px){
 
-    .navbar{
+.navbar{
 
-        padding:12px;
+padding:12px 15px;
 
-    }
+}
 
-    .logo{
+.logo{
 
-        font-size:20px;
+font-size:22px;
 
-    }
-
-    .nav-right a{
-
-        padding:7px 10px;
-
-        font-size:13px;
-
-    }
+}
 
 }
 
@@ -326,21 +386,51 @@ hr{
 
 <div class="navbar">
 
-    <div class="logo">SyifaApp ✨</div>
+<div class="logo">SyifaApp</div>
 
-    <div class="nav-right">
+<div class="nav-right">
 
-        <a href="/profile/" class="profile-btn">Profile</a>
+<a href="/profile/" class="profile">Profile</a>
 
-        <a href="/logout/" class="logout-btn">Logout</a>
+<a href="/logout/" class="logout">Logout</a>
 
-    </div>
+</div>
 
 </div>
 
 <div class="container">
 
-<!-- Upload -->
+<!-- STORY -->
+
+<div class="story-box">
+
+<div class="story">
+
+<div class="story-circle"><div>👤</div></div>
+
+<small>Kamu</small>
+
+</div>
+
+<div class="story">
+
+<div class="story-circle"><div>🌸</div></div>
+
+<small>Syifa</small>
+
+</div>
+
+<div class="story">
+
+<div class="story-circle"><div>✨</div></div>
+
+<small>Teman</small>
+
+</div>
+
+</div>
+
+<!-- UPLOAD -->
 
 <div class="upload-box">
 
@@ -362,7 +452,7 @@ hr{
 
 </div>
 
-<!-- Postingan -->
+<!-- POST -->
 
 {% for post in posts %}
 
@@ -374,7 +464,7 @@ hr{
 
 {% if request.user != post.user %}
 
-    <a href="/follow/{{ post.user.id }}/" class="follow">Follow</a>
+<a href="/follow/{{ post.user.id }}/" class="follow">Follow</a>
 
 {% endif %}
 
@@ -398,8 +488,6 @@ hr{
 
 <div class="post-body">
 
-<div class="caption">{{ post.caption }}</div>
-
 <div class="actions">
 
 <a href="/like/{{ post.id }}/">❤️ {{ post.total_likes }}</a>
@@ -414,15 +502,11 @@ hr{
 
 </div>
 
-<hr>
+<div class="caption">{{ post.caption }}</div>
 
 {% for comment in post.comments.all %}
 
-<div class="comment">
-
-<b>{{ comment.user.username }}</b> {{ comment.text }}
-
-</div>
+<div class="comment"><b>{{ comment.user.username }}</b> {{ comment.text }}</div>
 
 {% empty %}
 
