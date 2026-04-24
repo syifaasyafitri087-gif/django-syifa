@@ -4,6 +4,7 @@ from django.contrib.auth.models import User
 from django.contrib.auth.decorators import login_required
 from django.utils import timezone
 from django.db.models import Q
+from django.http import JsonResponse
 
 from .models import (
     Post,
@@ -19,14 +20,15 @@ from .models import (
 # REGISTER
 # =========================
 def register_view(request):
+
     if request.method == "POST":
 
-        username = request.POST['username']
-        password = request.POST['password']
+        username = request.POST["username"]
+        password = request.POST["password"]
 
         if User.objects.filter(username=username).exists():
-            return render(request, 'register.html', {
-                'error': 'Username sudah dipakai'
+            return render(request, "register.html", {
+                "error": "Username sudah dipakai"
             })
 
         user = User.objects.create_user(
@@ -40,19 +42,20 @@ def register_view(request):
             last_seen=timezone.now()
         )
 
-        return redirect('login')
+        return redirect("login")
 
-    return render(request, 'register.html')
+    return render(request, "register.html")
 
 
 # =========================
 # LOGIN
 # =========================
 def login_view(request):
+
     if request.method == "POST":
 
-        username = request.POST['username']
-        password = request.POST['password']
+        username = request.POST["username"]
+        password = request.POST["password"]
 
         user = authenticate(
             request,
@@ -72,13 +75,13 @@ def login_view(request):
             profile.last_seen = timezone.now()
             profile.save()
 
-            return redirect('home')
+            return redirect("home")
 
-        return render(request, 'login.html', {
-            'error': 'Login gagal'
+        return render(request, "login.html", {
+            "error": "Login gagal"
         })
 
-    return render(request, 'login.html')
+    return render(request, "login.html")
 
 
 # =========================
@@ -88,17 +91,15 @@ def logout_view(request):
 
     if request.user.is_authenticated:
 
-        profile, created = Profile.objects.get_or_create(
-            user=request.user
-        )
-
+        profile = request.user.profile
         profile.is_online = False
         profile.last_seen = timezone.now()
+        profile.typing_to = None
         profile.save()
 
     logout(request)
 
-    return redirect('login')
+    return redirect("login")
 
 
 # =========================
@@ -112,15 +113,15 @@ def home(request):
     profile.last_seen = timezone.now()
     profile.save()
 
-    posts = Post.objects.all().order_by('-id')
+    posts = Post.objects.all().order_by("-id")
 
     stories = Story.objects.filter(
         expires_at__gt=timezone.now()
-    ).order_by('-id')
+    ).order_by("-id")
 
-    return render(request, 'home.html', {
-        'posts': posts,
-        'stories': stories
+    return render(request, "home.html", {
+        "posts": posts,
+        "stories": stories
     })
 
 
@@ -129,10 +130,11 @@ def home(request):
 # =========================
 @login_required
 def explore_view(request):
-    posts = Post.objects.all().order_by('-id')
 
-    return render(request, 'explore.html', {
-        'posts': posts
+    posts = Post.objects.all().order_by("-id")
+
+    return render(request, "explore.html", {
+        "posts": posts
     })
 
 
@@ -141,26 +143,28 @@ def explore_view(request):
 # =========================
 @login_required
 def reels_view(request):
+
     posts = Post.objects.exclude(
-        video=''
+        video=""
     ).exclude(
         video=None
-    ).order_by('-id')
+    ).order_by("-id")
 
-    return render(request, 'reels.html', {
-        'posts': posts
+    return render(request, "reels.html", {
+        "posts": posts
     })
 
 
 # =========================
-# CHAT
+# CHAT ROOM
 # =========================
 @login_required
 def chat_view(request, user_id=None):
 
-    request.user.profile.is_online = True
-    request.user.profile.last_seen = timezone.now()
-    request.user.profile.save()
+    me = request.user.profile
+    me.is_online = True
+    me.last_seen = timezone.now()
+    me.save()
 
     users = User.objects.exclude(id=request.user.id)
 
@@ -177,7 +181,7 @@ def chat_view(request, user_id=None):
         messages = Message.objects.filter(
             Q(sender=request.user, receiver=selected_user) |
             Q(sender=selected_user, receiver=request.user)
-        ).order_by('created_at')
+        ).order_by("created_at")
 
         Message.objects.filter(
             sender=selected_user,
@@ -185,15 +189,15 @@ def chat_view(request, user_id=None):
             is_read=False
         ).update(is_read=True)
 
-    return render(request, 'chat.html', {
-        'users': users,
-        'selected_user': selected_user,
-        'messages': messages
+    return render(request, "chat.html", {
+        "users": users,
+        "selected_user": selected_user,
+        "messages": messages
     })
 
 
 # =========================
-# SEND MESSAGE
+# SEND MESSAGE + IMAGE
 # =========================
 @login_required
 def send_message(request, user_id):
@@ -205,17 +209,73 @@ def send_message(request, user_id):
             id=user_id
         )
 
-        text = request.POST.get('text')
+        text = request.POST.get("text")
+        image = request.FILES.get("image")
 
-        if text:
+        if text or image:
+
             Message.objects.create(
                 sender=request.user,
                 receiver=receiver,
                 text=text,
+                image=image,
                 delivered=True
             )
 
-    return redirect(f'/chat/{user_id}/')
+        request.user.profile.typing_to = None
+        request.user.profile.save()
+
+    return redirect(f"/chat/{user_id}/")
+
+
+# =========================
+# DELETE MESSAGE
+# =========================
+@login_required
+def delete_message(request, msg_id):
+
+    msg = get_object_or_404(
+        Message,
+        id=msg_id,
+        sender=request.user
+    )
+
+    msg.is_deleted = True
+    msg.text = "Pesan telah dihapus"
+    msg.image = None
+    msg.save()
+
+    return redirect(f"/chat/{msg.receiver.id}/")
+
+
+# =========================
+# TYPING STATUS
+# =========================
+@login_required
+def typing_status(request, user_id):
+
+    target = get_object_or_404(User, id=user_id)
+
+    request.user.profile.typing_to = target
+    request.user.profile.save()
+
+    return JsonResponse({
+        "status": "ok"
+    })
+
+
+# =========================
+# STOP TYPING
+# =========================
+@login_required
+def stop_typing(request):
+
+    request.user.profile.typing_to = None
+    request.user.profile.save()
+
+    return JsonResponse({
+        "status": "ok"
+    })
 
 
 # =========================
@@ -226,18 +286,14 @@ def upload_post(request):
 
     if request.method == "POST":
 
-        caption = request.POST.get('caption')
-        image = request.FILES.get('image')
-        video = request.FILES.get('video')
-
         Post.objects.create(
             user=request.user,
-            caption=caption,
-            image=image,
-            video=video
+            caption=request.POST.get("caption"),
+            image=request.FILES.get("image"),
+            video=request.FILES.get("video")
         )
 
-    return redirect('home')
+    return redirect("home")
 
 
 # =========================
@@ -248,7 +304,7 @@ def upload_story(request):
 
     if request.method == "POST":
 
-        image = request.FILES.get('image')
+        image = request.FILES.get("image")
 
         if image:
             Story.objects.create(
@@ -256,7 +312,7 @@ def upload_story(request):
                 image=image
             )
 
-    return redirect('home')
+    return redirect("home")
 
 
 # =========================
@@ -272,7 +328,29 @@ def like_post(request, post_id):
     else:
         post.likes.add(request.user)
 
-    return redirect('home')
+    return redirect("home")
+
+
+# =========================
+# COMMENT
+# =========================
+@login_required
+def add_comment(request, post_id):
+
+    if request.method == "POST":
+
+        post = get_object_or_404(Post, id=post_id)
+
+        text = request.POST.get("text")
+
+        if text:
+            Comment.objects.create(
+                user=request.user,
+                post=post,
+                text=text
+            )
+
+    return redirect("home")
 
 
 # =========================
@@ -286,7 +364,7 @@ def delete_post(request, post_id):
     if post.user == request.user:
         post.delete()
 
-    return redirect('home')
+    return redirect("home")
 
 
 # =========================
@@ -298,38 +376,16 @@ def edit_post(request, post_id):
     post = get_object_or_404(Post, id=post_id)
 
     if post.user != request.user:
-        return redirect('home')
+        return redirect("home")
 
     if request.method == "POST":
-        post.caption = request.POST.get('caption')
+        post.caption = request.POST.get("caption")
         post.save()
+        return redirect("home")
 
-        return redirect('home')
-
-    return render(request, 'edit.html', {
-        'post': post
+    return render(request, "edit.html", {
+        "post": post
     })
-
-
-# =========================
-# COMMENT
-# =========================
-@login_required
-def add_comment(request, post_id):
-
-    if request.method == "POST":
-
-        post = get_object_or_404(Post, id=post_id)
-        text = request.POST.get('text')
-
-        if text:
-            Comment.objects.create(
-                user=request.user,
-                post=post,
-                text=text
-            )
-
-    return redirect('home')
 
 
 # =========================
@@ -344,7 +400,7 @@ def profile_view(request):
 
     posts = Post.objects.filter(
         user=request.user
-    ).order_by('-id')
+    ).order_by("-id")
 
     followers = Follow.objects.filter(
         following=request.user
@@ -354,11 +410,11 @@ def profile_view(request):
         follower=request.user
     ).count()
 
-    return render(request, 'profile.html', {
-        'profile': profile,
-        'posts': posts,
-        'followers': followers,
-        'following': following
+    return render(request, "profile.html", {
+        "profile": profile,
+        "posts": posts,
+        "followers": followers,
+        "following": following
     })
 
 
@@ -368,14 +424,12 @@ def profile_view(request):
 @login_required
 def update_profile(request):
 
-    profile, created = Profile.objects.get_or_create(
-        user=request.user
-    )
+    profile = request.user.profile
 
     if request.method == "POST":
 
-        photo = request.FILES.get('photo')
-        bio = request.POST.get('bio')
+        photo = request.FILES.get("photo")
+        bio = request.POST.get("bio")
 
         if photo:
             profile.photo = photo
@@ -383,7 +437,7 @@ def update_profile(request):
         profile.bio = bio
         profile.save()
 
-    return redirect('profile')
+    return redirect("profile")
 
 
 # =========================
@@ -395,12 +449,13 @@ def follow_user(request, user_id):
     target = get_object_or_404(User, id=user_id)
 
     if request.user != target:
+
         Follow.objects.get_or_create(
             follower=request.user,
             following=target
         )
 
-    return redirect('home')
+    return redirect("home")
 
 
 # =========================
@@ -416,4 +471,4 @@ def unfollow_user(request, user_id):
         following=target
     ).delete()
 
-    return redirect('home')
+    return redirect("home")

@@ -103,6 +103,14 @@ class Profile(models.Model):
         default=timezone.now
     )
 
+    typing_to = models.ForeignKey(
+        User,
+        on_delete=models.SET_NULL,
+        null=True,
+        blank=True,
+        related_name='typing_users'
+    )
+
     def __str__(self):
         return self.user.username
 
@@ -171,7 +179,7 @@ class Story(models.Model):
 
 
 # =========================
-# CHAT MESSAGE
+# FULL CHAT MESSAGE
 # =========================
 class Message(models.Model):
 
@@ -187,7 +195,16 @@ class Message(models.Model):
         related_name='received_messages'
     )
 
-    text = models.TextField()
+    text = models.TextField(
+        blank=True,
+        null=True
+    )
+
+    image = models.ImageField(
+        upload_to='chat/',
+        blank=True,
+        null=True
+    )
 
     created_at = models.DateTimeField(
         auto_now_add=True
@@ -199,6 +216,10 @@ class Message(models.Model):
 
     delivered = models.BooleanField(
         default=True
+    )
+
+    is_deleted = models.BooleanField(
+        default=False
     )
 
     class Meta:

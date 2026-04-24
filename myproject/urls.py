@@ -38,7 +38,30 @@ urlpatterns = [
     # CHAT
     path('chat/', views.chat_view, name='chat'),
     path('chat/<int:user_id>/', views.chat_view, name='chat_room'),
-    path('send-message/<int:user_id>/', views.send_message, name='send_message'),
+
+    path(
+        'send-message/<int:user_id>/',
+        views.send_message,
+        name='send_message'
+    ),
+
+    path(
+        'delete-message/<int:msg_id>/',
+        views.delete_message,
+        name='delete_message'
+    ),
+
+    path(
+        'typing/<int:user_id>/',
+        views.typing_status,
+        name='typing_status'
+    ),
+
+    path(
+        'stop-typing/',
+        views.stop_typing,
+        name='stop_typing'
+    ),
 
 
     # =========================
@@ -57,14 +80,22 @@ urlpatterns = [
     # PROFILE
     # =========================
     path('profile/', views.profile_view, name='profile'),
-    path('update-profile/', views.update_profile, name='update_profile'),
+    path(
+        'update-profile/',
+        views.update_profile,
+        name='update_profile'
+    ),
 
 
     # =========================
     # FOLLOW
     # =========================
     path('follow/<int:user_id>/', views.follow_user, name='follow'),
-    path('unfollow/<int:user_id>/', views.unfollow_user, name='unfollow'),
+    path(
+        'unfollow/<int:user_id>/',
+        views.unfollow_user,
+        name='unfollow'
+    ),
 ]
 
 

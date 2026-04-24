@@ -4,7 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>SyifaChat Premium</title>
+<title>SyifaChat Final Boss</title>
 
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
@@ -30,7 +30,7 @@ padding:15px 18px;
 display:flex;
 justify-content:space-between;
 align-items:center;
-background:rgba(25,13,24,.85);
+background:rgba(25,13,24,.88);
 backdrop-filter:blur(12px);
 border-bottom:1px solid rgba(255,255,255,.08);
 position:sticky;
@@ -147,10 +147,9 @@ border:2px solid white;
 
 .username{
 font-weight:600;
-font-size:15px;
 }
 
-/* CHAT AREA */
+/* CHAT BOX */
 .chat-box{
 background:rgba(255,255,255,.07);
 border-radius:24px;
@@ -179,9 +178,10 @@ font-weight:700;
 font-size:12px;
 opacity:.8;
 margin-top:2px;
+color:#ffd6eb;
 }
 
-/* MESSAGE AREA */
+/* MESSAGE */
 .messages{
 flex:1;
 overflow-y:auto;
@@ -196,13 +196,8 @@ display:flex;
 width:100%;
 }
 
-.left{
-justify-content:flex-start;
-}
-
-.right{
-justify-content:flex-end;
-}
+.left{justify-content:flex-start;}
+.right{justify-content:flex-end;}
 
 .bubble{
 max-width:75%;
@@ -223,6 +218,13 @@ background:linear-gradient(90deg,#ff4da6,#ff8cc8);
 border-bottom-right-radius:6px;
 }
 
+.msg-img{
+max-width:230px;
+border-radius:14px;
+margin-top:8px;
+display:block;
+}
+
 .meta{
 font-size:11px;
 opacity:.75;
@@ -230,15 +232,36 @@ margin-top:5px;
 text-align:right;
 }
 
+/* DELETE */
+.delete-btn{
+display:inline-block;
+margin-top:6px;
+font-size:11px;
+color:#ffd6eb;
+text-decoration:none;
+}
+
 /* INPUT */
 .chat-form{
 padding:14px;
 display:flex;
 gap:10px;
+align-items:center;
 border-top:1px solid rgba(255,255,255,.06);
 }
 
-.chat-form input{
+.file-label{
+background:rgba(255,255,255,.08);
+padding:10px 12px;
+border-radius:12px;
+cursor:pointer;
+}
+
+.file-input{
+display:none;
+}
+
+.chat-form input[type=text]{
 flex:1;
 padding:12px 14px;
 border:none;
@@ -277,7 +300,7 @@ grid-template-columns:1fr;
 
 .users-box{
 height:auto;
-max-height:260px;
+max-height:250px;
 }
 
 .chat-box{
@@ -291,7 +314,6 @@ height:72vh;
 
 <body>
 
-<!-- NAVBAR -->
 <div class="navbar">
 
 <div class="logo">SyifaChat</div>
@@ -311,7 +333,6 @@ height:72vh;
 <div class="users-title">Pesan 💬</div>
 
 {% for user in users %}
-
 <a href="/chat/{{ user.id }}/" class="user-item">
 
 <div class="avatar">
@@ -328,12 +349,9 @@ height:72vh;
 
 </div>
 
-<div class="username">
-{{ user.username }}
-</div>
+<div class="username">{{ user.username }}</div>
 
 </a>
-
 {% endfor %}
 
 </div>
@@ -360,12 +378,9 @@ height:72vh;
 </div>
 
 <div>
+<div class="chat-name">{{ selected_user.username }}</div>
 
-<div class="chat-name">
-{{ selected_user.username }}
-</div>
-
-<div class="chat-status">
+<div class="chat-status" id="typingStatus">
 
 {% if selected_user.profile.is_online %}
 Online
@@ -374,7 +389,6 @@ Last seen {{ selected_user.profile.last_seen|date:"d M H:i" }}
 {% endif %}
 
 </div>
-
 </div>
 
 </div>
@@ -385,11 +399,23 @@ Last seen {{ selected_user.profile.last_seen|date:"d M H:i" }}
 {% for msg in messages %}
 
 {% if msg.sender == request.user %}
-
 <div class="row right">
 <div>
+
 <div class="bubble">
+
+{% if msg.is_deleted %}
+Pesan telah dihapus
+{% else %}
+
 {{ msg.text }}
+
+{% if msg.image %}
+<img src="{{ msg.image.url }}" class="msg-img">
+{% endif %}
+
+{% endif %}
+
 </div>
 
 <div class="meta">
@@ -400,8 +426,14 @@ Last seen {{ selected_user.profile.last_seen|date:"d M H:i" }}
 {% else %}
 ✓
 {% endif %}
-
 </div>
+
+{% if not msg.is_deleted %}
+<a href="/delete-message/{{ msg.id }}/" class="delete-btn">
+Hapus
+</a>
+{% endif %}
+
 </div>
 </div>
 
@@ -409,13 +441,27 @@ Last seen {{ selected_user.profile.last_seen|date:"d M H:i" }}
 
 <div class="row left">
 <div>
+
 <div class="bubble">
+
+{% if msg.is_deleted %}
+Pesan telah dihapus
+{% else %}
+
 {{ msg.text }}
+
+{% if msg.image %}
+<img src="{{ msg.image.url }}" class="msg-img">
+{% endif %}
+
+{% endif %}
+
 </div>
 
 <div class="meta">
 {{ msg.created_at|date:"H:i" }}
 </div>
+
 </div>
 </div>
 
@@ -435,16 +481,21 @@ Belum ada pesan 💖
 <form method="POST"
 action="/send-message/{{ selected_user.id }}/"
 class="chat-form"
-id="chatForm">
+id="chatForm"
+enctype="multipart/form-data">
 
 {% csrf_token %}
+
+<label class="file-label">
+📷
+<input type="file" name="image" class="file-input">
+</label>
 
 <input
 type="text"
 name="text"
 id="chatInput"
 placeholder="Tulis pesan..."
-required
 autocomplete="off">
 
 <button type="submit">
@@ -470,7 +521,7 @@ Pilih user di kiri untuk mulai chat 💬
 /* AUTO REFRESH */
 setTimeout(function(){
 location.reload();
-},5000);
+},4000);
 
 /* AUTO SCROLL */
 window.onload=function(){
@@ -485,12 +536,27 @@ const input=document.getElementById("chatInput");
 const form=document.getElementById("chatForm");
 
 if(input && form){
+
 input.addEventListener("keydown",function(e){
 if(e.key==="Enter"){
 e.preventDefault();
 form.submit();
 }
 });
+
+/* TYPING */
+input.addEventListener("input",function(){
+
+fetch("/typing/{{ selected_user.id }}/");
+
+clearTimeout(window.stopTypingTimer);
+
+window.stopTypingTimer=setTimeout(function(){
+fetch("/stop-typing/");
+},1500);
+
+});
+
 }
 
 </script>
