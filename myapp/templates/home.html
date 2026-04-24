@@ -30,13 +30,15 @@ body{
 
 font-family:'Poppins',sans-serif;
 
-background:linear-gradient(to bottom,#f8fafc,#eef2ff);
+background:#0f172a;
 
-color:#111827;
+color:white;
+
+padding-bottom:80px;
 
 }
 
-/* NAVBAR */
+/* TOPBAR */
 
 .navbar{
 
@@ -46,9 +48,9 @@ top:0;
 
 z-index:999;
 
-background:white;
+background:#111827;
 
-padding:14px 30px;
+padding:14px 20px;
 
 display:flex;
 
@@ -56,13 +58,13 @@ justify-content:space-between;
 
 align-items:center;
 
-box-shadow:0 2px 15px rgba(0,0,0,.07);
+box-shadow:0 2px 10px rgba(0,0,0,.4);
 
 }
 
 .logo{
 
-font-size:28px;
+font-size:24px;
 
 font-weight:700;
 
@@ -76,45 +78,49 @@ background:linear-gradient(90deg,#ec4899,#8b5cf6);
 
 .nav-right a{
 
+color:white;
+
 text-decoration:none;
 
-padding:10px 15px;
-
-border-radius:12px;
+margin-left:12px;
 
 font-size:14px;
 
-font-weight:600;
+}
 
-margin-left:10px;
+/* SEARCH */
+
+.search-box{
+
+padding:15px;
 
 }
 
-.profile{
+.search-box input{
 
-background:#e0e7ff;
+width:100%;
 
-color:#4338ca;
+padding:12px;
+
+border:none;
+
+border-radius:14px;
+
+background:#1e293b;
+
+color:white;
 
 }
 
-.logout{
-
-background:#fee2e2;
-
-color:#dc2626;
-
-}
-
-/* WRAP */
+/* CONTENT */
 
 .container{
 
-max-width:650px;
+max-width:620px;
 
 margin:auto;
 
-padding:25px 15px;
+padding:0 15px;
 
 }
 
@@ -128,17 +134,15 @@ gap:15px;
 
 overflow:auto;
 
-padding-bottom:15px;
-
 margin-bottom:20px;
 
 }
 
 .story{
 
-text-align:center;
-
 min-width:70px;
+
+text-align:center;
 
 }
 
@@ -150,9 +154,11 @@ height:65px;
 
 border-radius:50%;
 
+background:linear-gradient(45deg,#ec4899,#f59e0b);
+
 padding:3px;
 
-background:linear-gradient(45deg,#ec4899,#f59e0b);
+margin:auto;
 
 }
 
@@ -164,7 +170,7 @@ height:100%;
 
 border-radius:50%;
 
-background:white;
+background:#111827;
 
 display:flex;
 
@@ -180,23 +186,13 @@ font-size:28px;
 
 .upload-box{
 
-background:white;
+background:#111827;
 
-padding:22px;
+padding:20px;
 
 border-radius:20px;
 
-box-shadow:0 10px 30px rgba(0,0,0,.08);
-
-margin-bottom:25px;
-
-}
-
-.upload-box h2{
-
-margin-bottom:15px;
-
-font-size:22px;
+margin-bottom:20px;
 
 }
 
@@ -208,11 +204,13 @@ padding:12px;
 
 margin-top:10px;
 
-border:1px solid #ddd;
+border:none;
 
 border-radius:12px;
 
-font-family:inherit;
+background:#1e293b;
+
+color:white;
 
 }
 
@@ -234,25 +232,19 @@ color:white;
 
 font-weight:600;
 
-font-size:15px;
-
-cursor:pointer;
-
 }
 
 /* POST */
 
 .post{
 
-background:white;
+background:#111827;
 
 border-radius:22px;
 
 overflow:hidden;
 
-margin-bottom:28px;
-
-box-shadow:0 10px 30px rgba(0,0,0,.08);
+margin-bottom:25px;
 
 }
 
@@ -272,17 +264,13 @@ align-items:center;
 
 font-weight:700;
 
-font-size:16px;
-
 }
 
 .follow{
 
+color:#60a5fa;
+
 text-decoration:none;
-
-color:#2563eb;
-
-font-weight:600;
 
 }
 
@@ -292,17 +280,13 @@ font-weight:600;
 
 width:100%;
 
-max-height:650px;
-
-object-fit:cover;
-
 display:block;
 
 }
 
 .post-body{
 
-padding:16px;
+padding:15px;
 
 }
 
@@ -312,9 +296,7 @@ display:flex;
 
 gap:15px;
 
-margin-bottom:12px;
-
-font-size:14px;
+margin-bottom:10px;
 
 }
 
@@ -322,19 +304,17 @@ font-size:14px;
 
 text-decoration:none;
 
-color:#111827;
-
-font-weight:600;
-
-}
-
-.caption{
+color:white;
 
 font-size:14px;
 
-margin-bottom:12px;
+}
 
-line-height:1.6;
+.like{
+
+color:#f43f5e;
+
+font-size:18px;
 
 }
 
@@ -342,7 +322,7 @@ line-height:1.6;
 
 font-size:14px;
 
-margin-bottom:7px;
+margin-bottom:6px;
 
 }
 
@@ -352,29 +332,77 @@ width:100%;
 
 padding:11px;
 
-border:1px solid #ddd;
+border:none;
 
 border-radius:12px;
+
+background:#1e293b;
+
+color:white;
 
 margin-top:10px;
 
 }
 
-/* MOBILE */
+/* FLOATING BUTTON */
 
-@media(max-width:600px){
+.floating{
 
-.navbar{
+position:fixed;
 
-padding:12px 15px;
+right:20px;
+
+bottom:90px;
+
+width:58px;
+
+height:58px;
+
+border-radius:50%;
+
+background:linear-gradient(90deg,#ec4899,#8b5cf6);
+
+display:flex;
+
+justify-content:center;
+
+align-items:center;
+
+font-size:30px;
+
+box-shadow:0 8px 20px rgba(0,0,0,.4);
 
 }
 
-.logo{
+/* BOTTOM NAV */
 
-font-size:22px;
+.bottom-nav{
+
+position:fixed;
+
+bottom:0;
+
+left:0;
+
+width:100%;
+
+background:#111827;
+
+padding:12px;
+
+display:flex;
+
+justify-content:space-around;
+
+font-size:24px;
 
 }
+
+.bottom-nav a{
+
+text-decoration:none;
+
+color:white;
 
 }
 
@@ -390,11 +418,17 @@ font-size:22px;
 
 <div class="nav-right">
 
-<a href="/profile/" class="profile">Profile</a>
+<a href="/profile/">👤</a>
 
-<a href="/logout/" class="logout">Logout</a>
+<a href="/logout/">🚪</a>
 
 </div>
+
+</div>
+
+<div class="search-box">
+
+<input type="text" placeholder="Cari user...">
 
 </div>
 
@@ -422,7 +456,7 @@ font-size:22px;
 
 <div class="story">
 
-<div class="story-circle"><div>✨</div></div>
+<div class="story-circle"><div>🔥</div></div>
 
 <small>Teman</small>
 
@@ -438,15 +472,13 @@ font-size:22px;
 
 {% csrf_token %}
 
-<h2>Buat Postingan 📷🎥</h2>
-
 <textarea name="caption" placeholder="Tulis caption..."></textarea>
 
 <input type="file" name="image">
 
 <input type="file" name="video">
 
-<button type="submit">Upload Sekarang</button>
+<button type="submit">Upload</button>
 
 </form>
 
@@ -490,27 +522,23 @@ font-size:22px;
 
 <div class="actions">
 
-<a href="/like/{{ post.id }}/">❤️ {{ post.total_likes }}</a>
+<a href="/like/{{ post.id }}/" class="like">❤️ {{ post.total_likes }}</a>
 
 {% if request.user == post.user %}
 
-<a href="/edit/{{ post.id }}/">✏️ Edit</a>
+<a href="/edit/{{ post.id }}/">✏️</a>
 
-<a href="/delete/{{ post.id }}/">🗑️ Hapus</a>
+<a href="/delete/{{ post.id }}/">🗑️</a>
 
 {% endif %}
 
 </div>
 
-<div class="caption">{{ post.caption }}</div>
+<div style="margin-bottom:10px;">{{ post.caption }}</div>
 
 {% for comment in post.comments.all %}
 
 <div class="comment"><b>{{ comment.user.username }}</b> {{ comment.text }}</div>
-
-{% empty %}
-
-<div class="comment">Belum ada komentar</div>
 
 {% endfor %}
 
@@ -518,7 +546,7 @@ font-size:22px;
 
 {% csrf_token %}
 
-<input type="text" name="text" placeholder="Tulis komentar..." class="comment-box">
+<input type="text" name="text" placeholder="Komentar..." class="comment-box">
 
 </form>
 
@@ -527,6 +555,24 @@ font-size:22px;
 </div>
 
 {% endfor %}
+
+</div>
+
+<!-- FLOAT -->
+
+<div class="floating">＋</div>
+
+<!-- BOTTOM NAV -->
+
+<div class="bottom-nav">
+
+<a href="/home/">🏠</a>
+
+<a href="#">🔍</a>
+
+<a href="#">🎥</a>
+
+<a href="/profile/">👤</a>
 
 </div>
 
