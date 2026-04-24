@@ -6,20 +6,33 @@ from django.contrib.auth.models import User
 # POSTINGAN
 # =========================
 class Post(models.Model):
+
     user = models.ForeignKey(User, on_delete=models.CASCADE)
-    image = models.ImageField(upload_to='post/')
+
+    image = models.ImageField(upload_to='post/', blank=True, null=True)
+
+    video = models.FileField(upload_to='videos/', blank=True, null=True)
+
     caption = models.TextField(blank=True, null=True)
+
     likes = models.ManyToManyField(
+
         User,
+
         related_name='liked_posts',
+
         blank=True
+
     )
+
     created_at = models.DateTimeField(auto_now_add=True)
 
     def total_likes(self):
+
         return self.likes.count()
 
     def __str__(self):
+
         return self.user.username
 
 
