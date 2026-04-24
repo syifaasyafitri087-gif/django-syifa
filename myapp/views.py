@@ -20,6 +20,7 @@ from .models import (
 # =========================
 def register_view(request):
     if request.method == "POST":
+
         username = request.POST['username']
         password = request.POST['password']
 
@@ -33,7 +34,11 @@ def register_view(request):
             password=password
         )
 
-        Profile.objects.create(user=user)
+        Profile.objects.create(
+            user=user,
+            is_online=False,
+            last_seen=timezone.now()
+        )
 
         return redirect('login')
 
@@ -45,6 +50,7 @@ def register_view(request):
 # =========================
 def login_view(request):
     if request.method == "POST":
+
         username = request.POST['username']
         password = request.POST['password']
 
@@ -55,7 +61,17 @@ def login_view(request):
         )
 
         if user:
+
             login(request, user)
+
+            profile, created = Profile.objects.get_or_create(
+                user=user
+            )
+
+            profile.is_online = True
+            profile.last_seen = timezone.now()
+            profile.save()
+
             return redirect('home')
 
         return render(request, 'login.html', {
@@ -69,7 +85,19 @@ def login_view(request):
 # LOGOUT
 # =========================
 def logout_view(request):
+
+    if request.user.is_authenticated:
+
+        profile, created = Profile.objects.get_or_create(
+            user=request.user
+        )
+
+        profile.is_online = False
+        profile.last_seen = timezone.now()
+        profile.save()
+
     logout(request)
+
     return redirect('login')
 
 
@@ -78,6 +106,12 @@ def logout_view(request):
 # =========================
 @login_required
 def home(request):
+
+    profile = request.user.profile
+    profile.is_online = True
+    profile.last_seen = timezone.now()
+    profile.save()
+
     posts = Post.objects.all().order_by('-id')
 
     stories = Story.objects.filter(
@@ -119,10 +153,14 @@ def reels_view(request):
 
 
 # =========================
-# CHAT LIST + ROOM
+# CHAT
 # =========================
 @login_required
 def chat_view(request, user_id=None):
+
+    request.user.profile.is_online = True
+    request.user.profile.last_seen = timezone.now()
+    request.user.profile.save()
 
     users = User.objects.exclude(id=request.user.id)
 
@@ -130,7 +168,11 @@ def chat_view(request, user_id=None):
     messages = []
 
     if user_id:
-        selected_user = get_object_or_404(User, id=user_id)
+
+        selected_user = get_object_or_404(
+            User,
+            id=user_id
+        )
 
         messages = Message.objects.filter(
             Q(sender=request.user, receiver=selected_user) |
@@ -158,7 +200,10 @@ def send_message(request, user_id):
 
     if request.method == "POST":
 
-        receiver = get_object_or_404(User, id=user_id)
+        receiver = get_object_or_404(
+            User,
+            id=user_id
+        )
 
         text = request.POST.get('text')
 
@@ -166,7 +211,8 @@ def send_message(request, user_id):
             Message.objects.create(
                 sender=request.user,
                 receiver=receiver,
-                text=text
+                text=text,
+                delivered=True
             )
 
     return redirect(f'/chat/{user_id}/')
@@ -177,6 +223,7 @@ def send_message(request, user_id):
 # =========================
 @login_required
 def upload_post(request):
+
     if request.method == "POST":
 
         caption = request.POST.get('caption')
@@ -198,6 +245,7 @@ def upload_post(request):
 # =========================
 @login_required
 def upload_story(request):
+
     if request.method == "POST":
 
         image = request.FILES.get('image')

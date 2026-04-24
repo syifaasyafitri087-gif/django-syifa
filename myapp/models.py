@@ -72,7 +72,7 @@ class Comment(models.Model):
 
 
 # =========================
-# PROFILE
+# PROFILE PREMIUM
 # =========================
 class Profile(models.Model):
 
@@ -93,6 +93,14 @@ class Profile(models.Model):
 
     verified = models.BooleanField(
         default=False
+    )
+
+    is_online = models.BooleanField(
+        default=False
+    )
+
+    last_seen = models.DateTimeField(
+        default=timezone.now
     )
 
     def __str__(self):
@@ -163,7 +171,7 @@ class Story(models.Model):
 
 
 # =========================
-# CHAT MESSAGE PREMIUM
+# CHAT MESSAGE
 # =========================
 class Message(models.Model):
 
@@ -187,6 +195,10 @@ class Message(models.Model):
 
     is_read = models.BooleanField(
         default=False
+    )
+
+    delivered = models.BooleanField(
+        default=True
     )
 
     class Meta:
