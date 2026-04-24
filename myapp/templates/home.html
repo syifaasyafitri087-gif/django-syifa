@@ -3,27 +3,22 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
 <title>SyifaApp Pink Luxury</title>
-
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
-
 <style>
 *{
 margin:0;
 padding:0;
 box-sizing:border-box;
 }
-
 body{
 font-family:'Poppins',sans-serif;
 background:linear-gradient(180deg,#1a0f17,#2b1025,#3d1334,#190d18);
 color:white;
 padding-bottom:95px;
 }
-
-/* TOPBAR */
+/* NAVBAR */
 .navbar{
 position:sticky;
 top:0;
@@ -36,7 +31,6 @@ background:rgba(25,13,24,.75);
 backdrop-filter:blur(15px);
 border-bottom:1px solid rgba(255,255,255,.08);
 }
-
 .logo{
 font-size:27px;
 font-weight:700;
@@ -44,19 +38,16 @@ background:linear-gradient(90deg,#ff8cc8,#ff4da6,#ffd6eb);
 -webkit-background-clip:text;
 -webkit-text-fill-color:transparent;
 }
-
 .top-icons a{
 color:#ffd6eb;
 text-decoration:none;
 font-size:21px;
 margin-left:14px;
 }
-
 /* SEARCH */
 .search{
 padding:15px;
 }
-
 .search input{
 width:100%;
 padding:13px;
@@ -66,48 +57,43 @@ background:rgba(255,255,255,.08);
 color:white;
 outline:none;
 }
-
-/* WRAP */
+/* CONTAINER */
 .container{
 max-width:620px;
 margin:auto;
 padding:0 15px;
 }
-
 /* STORY */
 .story-wrap{
 display:flex;
 gap:14px;
 overflow-x:auto;
-margin-bottom:20px;
 padding-bottom:5px;
+margin-bottom:20px;
 }
-
 .story{
-min-width:75px;
+min-width:78px;
 text-align:center;
 font-size:13px;
 color:#ffd6eb;
+cursor:pointer;
 }
-
 .story-ring{
 width:68px;
 height:68px;
 border-radius:50%;
 padding:3px;
-background:linear-gradient(45deg,#ff4da6,#ff90cf,#ffd6eb);
-box-shadow:0 0 18px rgba(255,77,166,.35);
 margin:auto;
 overflow:hidden;
+background:linear-gradient(45deg,#ff4da6,#ff90cf,#ffd6eb);
+box-shadow:0 0 18px rgba(255,77,166,.35);
 }
-
 .story-ring img{
 width:100%;
 height:100%;
-border-radius:50%;
 object-fit:cover;
+border-radius:50%;
 }
-
 .story-ring div{
 width:100%;
 height:100%;
@@ -118,7 +104,6 @@ justify-content:center;
 align-items:center;
 font-size:28px;
 }
-
 /* MENU */
 .menu{
 display:grid;
@@ -126,28 +111,28 @@ grid-template-columns:repeat(4,1fr);
 gap:10px;
 margin-bottom:20px;
 }
-
 .menu a{
-background:rgba(255,255,255,.08);
+text-decoration:none;
+text-align:center;
 padding:14px;
 border-radius:18px;
-text-align:center;
-font-size:13px;
+background:rgba(255,255,255,.08);
 color:#ffd6eb;
-text-decoration:none;
+font-size:13px;
 }
-
-/* UPLOAD */
-.upload{
+/* CARD */
+.upload,
+.post{
 background:rgba(255,255,255,.07);
-padding:18px;
 border-radius:24px;
+padding:18px;
 margin-bottom:22px;
 backdrop-filter:blur(10px);
 border:1px solid rgba(255,255,255,.05);
 }
-
-textarea,input[type=file]{
+textarea,
+input[type=file],
+.comment-box{
 width:100%;
 padding:12px;
 margin-top:10px;
@@ -157,7 +142,6 @@ background:rgba(255,255,255,.08);
 color:white;
 outline:none;
 }
-
 button{
 width:100%;
 padding:13px;
@@ -170,86 +154,54 @@ font-weight:700;
 cursor:pointer;
 box-shadow:0 0 18px rgba(255,77,166,.35);
 }
-
-/* POST */
-.post{
-background:rgba(255,255,255,.07);
-border-radius:24px;
-overflow:hidden;
-margin-bottom:24px;
-backdrop-filter:blur(10px);
-border:1px solid rgba(255,255,255,.05);
-}
-
 .post-top{
-padding:15px;
 display:flex;
 justify-content:space-between;
 align-items:center;
+margin-bottom:12px;
 }
-
 .user{
 font-weight:700;
 color:#ffd6eb;
 }
-
 .follow{
 color:#ff8cc8;
 text-decoration:none;
 font-size:14px;
 font-weight:600;
 }
-
-.post img,.post video{
+.post img,
+.post video{
 width:100%;
 display:block;
+border-radius:18px;
+margin-bottom:12px;
 }
-
-.post-body{
-padding:15px;
-}
-
 .actions{
 display:flex;
 gap:14px;
 font-size:20px;
 margin-bottom:10px;
 }
-
 .actions a{
 text-decoration:none;
 color:white;
 }
-
 .likes{
 color:#ffd6eb;
 margin-bottom:10px;
 font-size:14px;
 }
-
 .caption{
 margin-bottom:12px;
 line-height:1.5;
 }
-
 .comment{
 font-size:14px;
 margin-bottom:7px;
 color:#ffe4f2;
 }
-
-.comment-box{
-width:100%;
-padding:11px;
-border:none;
-border-radius:12px;
-background:rgba(255,255,255,.08);
-color:white;
-margin-top:10px;
-outline:none;
-}
-
-/* FLOAT */
+/* FLOAT BUTTON */
 .float{
 position:fixed;
 right:18px;
@@ -257,61 +209,83 @@ bottom:92px;
 width:60px;
 height:60px;
 border-radius:50%;
-background:linear-gradient(90deg,#ff4da6,#ff8cc8);
 display:flex;
 justify-content:center;
 align-items:center;
 font-size:30px;
+background:linear-gradient(90deg,#ff4da6,#ff8cc8);
 box-shadow:0 0 25px #ff4da6;
 }
-
-/* BOTTOM */
+/* BOTTOM NAV */
 .bottom{
 position:fixed;
 bottom:0;
 left:0;
 width:100%;
-background:rgba(25,13,24,.92);
 padding:13px;
 display:flex;
 justify-content:space-around;
 font-size:24px;
+background:rgba(25,13,24,.92);
 backdrop-filter:blur(15px);
 border-top:1px solid rgba(255,255,255,.08);
 }
-
 .bottom a{
-color:#ffd6eb;
 text-decoration:none;
+color:#ffd6eb;
+}
+/* STORY POPUP */
+.story-popup{
+position:fixed;
+top:0;
+left:0;
+width:100%;
+height:100%;
+background:rgba(0,0,0,.88);
+display:none;
+justify-content:center;
+align-items:center;
+flex-direction:column;
+z-index:9999;
+padding:20px;
+}
+.story-popup img{
+max-width:95%;
+max-height:80%;
+border-radius:20px;
+}
+.story-name{
+margin-top:15px;
+font-size:20px;
+font-weight:700;
+}
+.close-story{
+position:absolute;
+top:20px;
+right:20px;
+font-size:32px;
+cursor:pointer;
+color:white;
 }
 </style>
 </head>
-
 <body>
-
 <!-- NAVBAR -->
 <div class="navbar">
-
 <div class="logo">SyifaApp</div>
-
 <div class="top-icons">
 <a href="#">💖</a>
 <a href="/chat/">💬</a>
 <a href="/profile/">👤</a>
 </div>
-
 </div>
-
 <!-- SEARCH -->
 <div class="search">
 <input type="text" placeholder="Cari teman, reels, explore...">
 </div>
-
 <div class="container">
-
 <!-- STORY -->
 <div class="story-wrap">
-
 <!-- STORY KAMU -->
 <div class="story">
 <div class="story-ring">
@@ -320,23 +294,23 @@ text-decoration:none;
 Kamu
 </div>
 
-<!-- STORY DATABASE -->
 {% for story in stories %}
-<div class="story">
 
+<div class="story"
+onclick="openStory('{{ story.user.username }}','{{ story.image.url }}')">
 <div class="story-ring">
 
 {% if story.user.profile.photo %}
-<img src="{{ story.user.profile.photo.url }}">
 {% else %}
+
 <div>👤</div>
 {% endif %}
-
 </div>
 
 {{ story.user.username }}
 
 </div>
+
 {% empty %}
 
 <div class="story">
@@ -347,7 +321,6 @@ Belum Ada
 {% endfor %}
 
 </div>
-
 <!-- MENU -->
 <div class="menu">
 <a href="/explore/">🔥 Explore</a>
@@ -355,100 +328,75 @@ Belum Ada
 <a href="/chat/">💬 Chat</a>
 <a href="#">💖 Notif</a>
 </div>
-
 <!-- UPLOAD STORY -->
 <div class="upload">
-
 <form method="POST" enctype="multipart/form-data" action="/story-upload/">
 {% csrf_token %}
-
 <input type="file" name="image" required>
-
 <button type="submit">Upload Story</button>
-
 </form>
-
 </div>
-
 <!-- UPLOAD POST -->
 <div class="upload">
-
 <form method="POST" enctype="multipart/form-data" action="/upload/">
 {% csrf_token %}
-
 <textarea name="caption" placeholder="Tulis sesuatu yang manis..."></textarea>
-
 <input type="file" name="image">
 <input type="file" name="video">
-
 <button type="submit">Upload Postingan</button>
-
 </form>
-
 </div>
-
 <!-- POST -->
+
 {% for post in posts %}
 
 <div class="post">
-
 <div class="post-top">
-
 <div class="user">{{ post.user.username }}</div>
 
 {% if request.user != post.user %}
-<a href="/follow/{{ post.user.id }}/" class="follow">Follow</a>
+Follow
 {% endif %}
 
 </div>
 
 {% if post.image %}
-<img src="{{ post.image.url }}">
 {% endif %}
 
 {% if post.video %}
-<video controls>
 <source src="{{ post.video.url }}">
 </video>
 {% endif %}
-
-<div class="post-body">
-
 <div class="actions">
 <a href="/like/{{ post.id }}/">💖</a>
 <a href="#">💬</a>
 <a href="#">📤</a>
 </div>
-
 <div class="likes">
 <b>{{ post.total_likes }}</b> suka
 </div>
-
 <div class="caption">
 {{ post.caption }}
 </div>
 
 {% for comment in post.comments.all %}
+
 <div class="comment">
 <b>{{ comment.user.username }}</b> {{ comment.text }}
 </div>
 {% endfor %}
-
 <form method="POST" action="/comment/{{ post.id }}/">
 {% csrf_token %}
 <input type="text" name="text" class="comment-box" placeholder="Tambah komentar...">
 </form>
-
-</div>
-
 </div>
 
 {% endfor %}
 
 </div>
-
+<!-- FLOAT -->
 <div class="float">＋</div>
-
+<!-- BOTTOM -->
 <div class="bottom">
 <a href="/home/">🏠</a>
 <a href="/explore/">🔍</a>
@@ -456,6 +404,21 @@ Belum Ada
 <a href="/chat/">💬</a>
 <a href="/profile/">👤</a>
 </div>
-
+<!-- STORY FULLSCREEN -->
+<div class="story-popup" id="storyPopup">
+<div class="close-story" onclick="closeStory()">✖</div>
+<img id="storyImage">
+<div class="story-name" id="storyName"></div>
+</div>
+<script>
+function openStory(name,img){
+document.getElementById("storyPopup").style.display="flex";
+document.getElementById("storyImage").src=img;
+document.getElementById("storyName").innerText=name;
+}
+function closeStory(){
+document.getElementById("storyPopup").style.display="none";
+}
+</script>
 </body>
 </html>
