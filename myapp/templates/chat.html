@@ -4,235 +4,399 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Chat - SyifaApp</title>
+<title>Chat Premium - SyifaApp</title>
 
 <link rel="preconnect" href="https://fonts.googleapis.com">
-<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
 
 <style>
 
 *{
-    margin:0;
-    padding:0;
-    box-sizing:border-box;
+margin:0;
+padding:0;
+box-sizing:border-box;
 }
 
 body{
-    font-family:'Poppins',sans-serif;
-    background:#f4f6fb;
+font-family:'Poppins',sans-serif;
+background:linear-gradient(180deg,#1a0f17,#2b1025,#3d1334,#190d18);
+color:white;
+min-height:100vh;
 }
 
-/* NAVBAR */
+/* TOPBAR */
 .navbar{
-    background:#111827;
-    color:white;
-    padding:15px 25px;
-    display:flex;
-    justify-content:space-between;
-    align-items:center;
+padding:15px 18px;
+display:flex;
+justify-content:space-between;
+align-items:center;
+background:rgba(25,13,24,.80);
+backdrop-filter:blur(12px);
+border-bottom:1px solid rgba(255,255,255,.08);
+position:sticky;
+top:0;
+z-index:999;
 }
 
 .logo{
-    font-size:24px;
-    font-weight:700;
+font-size:25px;
+font-weight:700;
+background:linear-gradient(90deg,#ff8cc8,#ff4da6,#ffd6eb);
+-webkit-background-clip:text;
+-webkit-text-fill-color:transparent;
 }
 
 .menu a{
-    text-decoration:none;
-    color:white;
-    margin-left:10px;
-    padding:8px 14px;
-    border-radius:10px;
-    font-size:14px;
-    font-weight:600;
+text-decoration:none;
+color:white;
+margin-left:10px;
+padding:8px 14px;
+border-radius:12px;
+font-size:14px;
+font-weight:600;
 }
 
 .home{
-    background:#2563eb;
+background:#ff4da6;
 }
 
 .logout{
-    background:#ef4444;
+background:#ef4444;
 }
 
-/* CHAT BOX */
+/* LAYOUT */
 .wrapper{
-    max-width:700px;
-    margin:35px auto;
-    padding:0 15px;
+max-width:1100px;
+margin:auto;
+padding:20px 15px;
+display:grid;
+grid-template-columns:320px 1fr;
+gap:18px;
 }
 
+/* USERS */
+.users-box{
+background:rgba(255,255,255,.07);
+border-radius:24px;
+padding:18px;
+backdrop-filter:blur(10px);
+border:1px solid rgba(255,255,255,.06);
+height:78vh;
+overflow-y:auto;
+}
+
+.users-title{
+font-size:20px;
+font-weight:700;
+margin-bottom:14px;
+color:#ffd6eb;
+}
+
+.user-item{
+display:flex;
+align-items:center;
+gap:12px;
+padding:12px;
+border-radius:16px;
+text-decoration:none;
+color:white;
+margin-bottom:10px;
+background:rgba(255,255,255,.05);
+}
+
+.user-item:hover{
+background:rgba(255,255,255,.10);
+}
+
+.avatar{
+width:48px;
+height:48px;
+border-radius:50%;
+overflow:hidden;
+background:linear-gradient(45deg,#ff4da6,#ff8cc8);
+padding:2px;
+flex-shrink:0;
+}
+
+.avatar img{
+width:100%;
+height:100%;
+object-fit:cover;
+border-radius:50%;
+}
+
+.avatar div{
+width:100%;
+height:100%;
+display:flex;
+justify-content:center;
+align-items:center;
+background:#2b1025;
+border-radius:50%;
+font-size:20px;
+}
+
+.username{
+font-weight:600;
+}
+
+/* CHAT AREA */
 .chat-box{
-    background:white;
-    border-radius:20px;
-    box-shadow:0 10px 25px rgba(0,0,0,0.08);
-    overflow:hidden;
+background:rgba(255,255,255,.07);
+border-radius:24px;
+display:flex;
+flex-direction:column;
+height:78vh;
+overflow:hidden;
+backdrop-filter:blur(10px);
+border:1px solid rgba(255,255,255,.06);
 }
 
 .chat-header{
-    background:linear-gradient(90deg,#2563eb,#3b82f6);
-    color:white;
-    padding:18px;
-    font-size:20px;
-    font-weight:700;
+padding:18px;
+font-size:18px;
+font-weight:700;
+border-bottom:1px solid rgba(255,255,255,.06);
+color:#ffd6eb;
 }
 
 .messages{
-    height:450px;
-    overflow-y:auto;
-    padding:20px;
-    background:#f8fafc;
+flex:1;
+overflow-y:auto;
+padding:18px;
+display:flex;
+flex-direction:column;
+gap:12px;
 }
 
-.message{
-    margin-bottom:15px;
-    display:flex;
+.row{
+display:flex;
 }
 
 .left{
-    justify-content:flex-start;
+justify-content:flex-start;
 }
 
 .right{
-    justify-content:flex-end;
+justify-content:flex-end;
 }
 
 .bubble{
-    max-width:75%;
-    padding:12px 15px;
-    border-radius:18px;
-    font-size:14px;
-    line-height:1.5;
+max-width:75%;
+padding:12px 15px;
+border-radius:18px;
+font-size:14px;
+line-height:1.5;
+word-break:break-word;
 }
 
 .left .bubble{
-    background:#e5e7eb;
-    color:#111827;
+background:rgba(255,255,255,.12);
+color:white;
+border-bottom-left-radius:6px;
 }
 
 .right .bubble{
-    background:#2563eb;
-    color:white;
+background:linear-gradient(90deg,#ff4da6,#ff8cc8);
+color:white;
+border-bottom-right-radius:6px;
+}
+
+.time{
+font-size:11px;
+opacity:.7;
+margin-top:4px;
 }
 
 /* INPUT */
-.chat-input{
-    padding:15px;
-    display:flex;
-    gap:10px;
-    border-top:1px solid #eee;
+.chat-form{
+padding:14px;
+display:flex;
+gap:10px;
+border-top:1px solid rgba(255,255,255,.06);
 }
 
-.chat-input input{
-    flex:1;
-    padding:12px;
-    border:1px solid #ddd;
-    border-radius:12px;
-    outline:none;
+.chat-form input{
+flex:1;
+padding:12px;
+border:none;
+border-radius:14px;
+background:rgba(255,255,255,.08);
+color:white;
+outline:none;
 }
 
-.chat-input button{
-    border:none;
-    background:#2563eb;
-    color:white;
-    padding:12px 18px;
-    border-radius:12px;
-    font-weight:600;
-    cursor:pointer;
+.chat-form button{
+border:none;
+padding:12px 18px;
+border-radius:14px;
+background:linear-gradient(90deg,#ff4da6,#ff8cc8);
+color:white;
+font-weight:700;
+cursor:pointer;
 }
 
-.info{
-    text-align:center;
-    color:#64748b;
-    font-size:13px;
-    padding:10px;
+.empty{
+display:flex;
+justify-content:center;
+align-items:center;
+height:100%;
+padding:30px;
+text-align:center;
+color:#ffd6eb;
 }
 
-@media(max-width:700px){
+/* MOBILE */
+@media(max-width:900px){
 
-    .navbar{
-        padding:12px;
-    }
+.wrapper{
+grid-template-columns:1fr;
+}
 
-    .logo{
-        font-size:20px;
-    }
+.users-box{
+height:auto;
+max-height:260px;
+}
 
-    .menu a{
-        font-size:13px;
-        padding:7px 10px;
-    }
-
-    .messages{
-        height:380px;
-    }
+.chat-box{
+height:72vh;
+}
 
 }
 
 </style>
 </head>
+
 <body>
 
 <!-- NAVBAR -->
 <div class="navbar">
 
-    <div class="logo">SyifaApp 💬</div>
+<div class="logo">SyifaChat</div>
 
-    <div class="menu">
-        <a href="/home/" class="home">Home</a>
-        <a href="/logout/" class="logout">Logout</a>
-    </div>
+<div class="menu">
+<a href="/home/" class="home">Home</a>
+<a href="/logout/" class="logout">Logout</a>
+</div>
 
 </div>
 
-<!-- CHAT -->
 <div class="wrapper">
 
+<!-- USER LIST -->
+<div class="users-box">
+
+<div class="users-title">
+Pesan 💬
+</div>
+
+{% for user in users %}
+
+<a href="/chat/{{ user.id }}/" class="user-item">
+
+<div class="avatar">
+
+{% if user.profile.photo %}
+<img src="{{ user.profile.photo.url }}">
+{% else %}
+<div>👤</div>
+{% endif %}
+
+</div>
+
+<div class="username">
+{{ user.username }}
+</div>
+
+</a>
+
+{% endfor %}
+
+</div>
+
+<!-- CHAT ROOM -->
 <div class="chat-box">
 
-    <div class="chat-header">
-        Chat Room
-    </div>
+{% if selected_user %}
 
-    <div class="messages">
+<div class="chat-header">
+Chat dengan {{ selected_user.username }}
+</div>
 
-        <div class="message left">
-            <div class="bubble">
-                Halo 👋 Selamat datang di chat SyifaApp
-            </div>
-        </div>
+<div class="messages" id="messagesBox">
 
-        <div class="message right">
-            <div class="bubble">
-                Hai juga 😍
-            </div>
-        </div>
+{% for msg in messages %}
 
-        <div class="message left">
-            <div class="bubble">
-                Fitur chat realtime bisa ditambah nanti 🚀
-            </div>
-        </div>
+{% if msg.sender == request.user %}
+<div class="row right">
+<div>
+<div class="bubble">
+{{ msg.text }}
+</div>
+<div class="time">
+{{ msg.created_at|date:"H:i" }}
+</div>
+</div>
+</div>
+{% else %}
+<div class="row left">
+<div>
+<div class="bubble">
+{{ msg.text }}
+</div>
+<div class="time">
+{{ msg.created_at|date:"H:i" }}
+</div>
+</div>
+</div>
+{% endif %}
 
-    </div>
+{% empty %}
 
-    <form class="chat-input">
+<div class="empty">
+Belum ada pesan 💖
+</div>
 
-        <input type="text" placeholder="Tulis pesan...">
+{% endfor %}
 
-        <button type="submit">
-            Kirim
-        </button>
+</div>
 
-    </form>
+<form method="POST" action="/send-message/{{ selected_user.id }}/" class="chat-form">
 
-    <div class="info">
-        Demo chat page (belum realtime database)
-    </div>
+{% csrf_token %}
+
+<input type="text" name="text" placeholder="Tulis pesan..." required>
+
+<button type="submit">
+Kirim
+</button>
+
+</form>
+
+{% else %}
+
+<div class="empty">
+Pilih user di sebelah kiri untuk mulai chat 💬
+</div>
+
+{% endif %}
 
 </div>
 
 </div>
+
+<script>
+setTimeout(function(){
+location.reload();
+},7000);
+
+window.onload=function(){
+let box=document.getElementById("messagesBox");
+if(box){
+box.scrollTop=box.scrollHeight;
+}
+}
+</script>
 
 </body>
 </html>

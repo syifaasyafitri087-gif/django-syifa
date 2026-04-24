@@ -34,7 +34,11 @@ urlpatterns = [
     # =========================
     path('explore/', views.explore_view, name='explore'),
     path('reels/', views.reels_view, name='reels'),
+
+    # CHAT
     path('chat/', views.chat_view, name='chat'),
+    path('chat/<int:user_id>/', views.chat_view, name='chat_room'),
+    path('send-message/<int:user_id>/', views.send_message, name='send_message'),
 
 
     # =========================

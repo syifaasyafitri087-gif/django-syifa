@@ -3,8 +3,16 @@ from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.models import User
 from django.contrib.auth.decorators import login_required
 from django.utils import timezone
+from django.db.models import Q
 
-from .models import Post, Comment, Profile, Follow, Story
+from .models import (
+    Post,
+    Comment,
+    Profile,
+    Follow,
+    Story,
+    Message
+)
 
 
 # =========================
@@ -66,11 +74,12 @@ def logout_view(request):
 
 
 # =========================
-# HOME PREMIUM
+# HOME
 # =========================
 @login_required
 def home(request):
     posts = Post.objects.all().order_by('-id')
+
     stories = Story.objects.filter(
         expires_at__gt=timezone.now()
     ).order_by('-id')
@@ -110,15 +119,57 @@ def reels_view(request):
 
 
 # =========================
-# CHAT
+# CHAT LIST + ROOM
 # =========================
 @login_required
-def chat_view(request):
+def chat_view(request, user_id=None):
+
     users = User.objects.exclude(id=request.user.id)
 
+    selected_user = None
+    messages = []
+
+    if user_id:
+        selected_user = get_object_or_404(User, id=user_id)
+
+        messages = Message.objects.filter(
+            Q(sender=request.user, receiver=selected_user) |
+            Q(sender=selected_user, receiver=request.user)
+        ).order_by('created_at')
+
+        Message.objects.filter(
+            sender=selected_user,
+            receiver=request.user,
+            is_read=False
+        ).update(is_read=True)
+
     return render(request, 'chat.html', {
-        'users': users
+        'users': users,
+        'selected_user': selected_user,
+        'messages': messages
     })
+
+
+# =========================
+# SEND MESSAGE
+# =========================
+@login_required
+def send_message(request, user_id):
+
+    if request.method == "POST":
+
+        receiver = get_object_or_404(User, id=user_id)
+
+        text = request.POST.get('text')
+
+        if text:
+            Message.objects.create(
+                sender=request.user,
+                receiver=receiver,
+                text=text
+            )
+
+    return redirect(f'/chat/{user_id}/')
 
 
 # =========================
@@ -127,6 +178,7 @@ def chat_view(request):
 @login_required
 def upload_post(request):
     if request.method == "POST":
+
         caption = request.POST.get('caption')
         image = request.FILES.get('image')
         video = request.FILES.get('video')
@@ -147,6 +199,7 @@ def upload_post(request):
 @login_required
 def upload_story(request):
     if request.method == "POST":
+
         image = request.FILES.get('image')
 
         if image:
@@ -163,6 +216,7 @@ def upload_story(request):
 # =========================
 @login_required
 def like_post(request, post_id):
+
     post = get_object_or_404(Post, id=post_id)
 
     if request.user in post.likes.all():
@@ -174,10 +228,11 @@ def like_post(request, post_id):
 
 
 # =========================
-# DELETE
+# DELETE POST
 # =========================
 @login_required
 def delete_post(request, post_id):
+
     post = get_object_or_404(Post, id=post_id)
 
     if post.user == request.user:
@@ -187,10 +242,11 @@ def delete_post(request, post_id):
 
 
 # =========================
-# EDIT
+# EDIT POST
 # =========================
 @login_required
 def edit_post(request, post_id):
+
     post = get_object_or_404(Post, id=post_id)
 
     if post.user != request.user:
@@ -199,6 +255,7 @@ def edit_post(request, post_id):
     if request.method == "POST":
         post.caption = request.POST.get('caption')
         post.save()
+
         return redirect('home')
 
     return render(request, 'edit.html', {
@@ -211,7 +268,9 @@ def edit_post(request, post_id):
 # =========================
 @login_required
 def add_comment(request, post_id):
+
     if request.method == "POST":
+
         post = get_object_or_404(Post, id=post_id)
         text = request.POST.get('text')
 
@@ -230,6 +289,7 @@ def add_comment(request, post_id):
 # =========================
 @login_required
 def profile_view(request):
+
     profile, created = Profile.objects.get_or_create(
         user=request.user
     )
@@ -259,11 +319,13 @@ def profile_view(request):
 # =========================
 @login_required
 def update_profile(request):
+
     profile, created = Profile.objects.get_or_create(
         user=request.user
     )
 
     if request.method == "POST":
+
         photo = request.FILES.get('photo')
         bio = request.POST.get('bio')
 
@@ -281,6 +343,7 @@ def update_profile(request):
 # =========================
 @login_required
 def follow_user(request, user_id):
+
     target = get_object_or_404(User, id=user_id)
 
     if request.user != target:
@@ -297,6 +360,7 @@ def follow_user(request, user_id):
 # =========================
 @login_required
 def unfollow_user(request, user_id):
+
     target = get_object_or_404(User, id=user_id)
 
     Follow.objects.filter(
