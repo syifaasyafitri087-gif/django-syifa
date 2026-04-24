@@ -52,9 +52,15 @@ urlpatterns = [
 
     path('unfollow/<int:user_id>/', views.unfollow_user, name='unfollow'),
 
-]
+    # EXTRA PAGE
 
-# MEDIA FILE
+    path('explore/', views.explore_view, name='explore'),
+
+    path('reels/', views.reels_view, name='reels'),
+
+    path('chat/', views.chat_view, name='chat'),
+
+]
 
 urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
 

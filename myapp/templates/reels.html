@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Reels - SyifaApp</title>
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
+
+<style>
+
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+}
+
+body{
+    font-family:'Poppins',sans-serif;
+    background:#0f172a;
+    color:white;
+}
+
+/* NAVBAR */
+.navbar{
+    position:sticky;
+    top:0;
+    z-index:100;
+    background:#111827;
+    padding:15px 25px;
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+}
+
+.logo{
+    font-size:24px;
+    font-weight:700;
+}
+
+.menu a{
+    color:white;
+    text-decoration:none;
+    margin-left:12px;
+    padding:8px 14px;
+    border-radius:10px;
+    font-size:14px;
+    font-weight:600;
+}
+
+.home{
+    background:#2563eb;
+}
+
+.logout{
+    background:#ef4444;
+}
+
+/* WRAP */
+.container{
+    max-width:500px;
+    margin:30px auto;
+    padding:0 15px;
+}
+
+/* CARD */
+.reel{
+    background:#111827;
+    border-radius:18px;
+    overflow:hidden;
+    margin-bottom:30px;
+    box-shadow:0 10px 25px rgba(0,0,0,0.4);
+}
+
+video{
+    width:100%;
+    max-height:700px;
+    object-fit:cover;
+    background:black;
+}
+
+.info{
+    padding:15px;
+}
+
+.username{
+    font-size:18px;
+    font-weight:700;
+    margin-bottom:8px;
+}
+
+.caption{
+    color:#e5e7eb;
+    margin-bottom:12px;
+    line-height:1.5;
+}
+
+.action{
+    display:flex;
+    gap:15px;
+}
+
+.action a{
+    color:white;
+    text-decoration:none;
+    font-size:14px;
+    font-weight:600;
+}
+
+.empty{
+    text-align:center;
+    padding:40px;
+    background:#111827;
+    border-radius:18px;
+    color:#cbd5e1;
+}
+
+@media(max-width:700px){
+
+    .navbar{
+        padding:12px;
+    }
+
+    .logo{
+        font-size:20px;
+    }
+
+    .menu a{
+        font-size:13px;
+        padding:7px 10px;
+    }
+
+}
+
+</style>
+</head>
+<body>
+
+<!-- NAVBAR -->
+<div class="navbar">
+
+    <div class="logo">SyifaApp 🎬</div>
+
+    <div class="menu">
+        <a href="/home/" class="home">Home</a>
+        <a href="/logout/" class="logout">Logout</a>
+    </div>
+
+</div>
+
+<!-- CONTENT -->
+<div class="container">
+
+{% for post in posts %}
+
+<div class="reel">
+
+    {% if post.video %}
+    <video controls autoplay muted loop>
+        <source src="{{ post.video.url }}">
+    </video>
+    {% endif %}
+
+    <div class="info">
+
+        <div class="username">
+            {{ post.user.username }}
+        </div>
+
+        <div class="caption">
+            {{ post.caption }}
+        </div>
+
+        <div class="action">
+            <a href="/like/{{ post.id }}/">❤️ {{ post.total_likes }}</a>
+            <a href="/comment/{{ post.id }}/">💬 Komentar</a>
+        </div>
+
+    </div>
+
+</div>
+
+{% empty %}
+
+<div class="empty">
+    Belum ada video reels 🎥
+</div>
+
+{% endfor %}
+
+</div>
+
+</body>
+</html>
