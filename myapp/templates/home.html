@@ -10,7 +10,6 @@
 <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
 
 <style>
-
 *{
 margin:0;
 padding:0;
@@ -79,8 +78,9 @@ padding:0 15px;
 .story-wrap{
 display:flex;
 gap:14px;
-overflow:auto;
+overflow-x:auto;
 margin-bottom:20px;
+padding-bottom:5px;
 }
 
 .story{
@@ -97,6 +97,15 @@ border-radius:50%;
 padding:3px;
 background:linear-gradient(45deg,#ff4da6,#ff90cf,#ffd6eb);
 box-shadow:0 0 18px rgba(255,77,166,.35);
+margin:auto;
+overflow:hidden;
+}
+
+.story-ring img{
+width:100%;
+height:100%;
+border-radius:50%;
+object-fit:cover;
 }
 
 .story-ring div{
@@ -110,7 +119,7 @@ align-items:center;
 font-size:28px;
 }
 
-/* QUICK MENU */
+/* MENU */
 .menu{
 display:grid;
 grid-template-columns:repeat(4,1fr);
@@ -118,13 +127,14 @@ gap:10px;
 margin-bottom:20px;
 }
 
-.menu div{
+.menu a{
 background:rgba(255,255,255,.08);
 padding:14px;
 border-radius:18px;
 text-align:center;
 font-size:13px;
 color:#ffd6eb;
+text-decoration:none;
 }
 
 /* UPLOAD */
@@ -274,12 +284,12 @@ border-top:1px solid rgba(255,255,255,.08);
 color:#ffd6eb;
 text-decoration:none;
 }
-
 </style>
 </head>
 
 <body>
 
+<!-- NAVBAR -->
 <div class="navbar">
 
 <div class="logo">SyifaApp</div>
@@ -292,6 +302,7 @@ text-decoration:none;
 
 </div>
 
+<!-- SEARCH -->
 <div class="search">
 <input type="text" placeholder="Cari teman, reels, explore...">
 </div>
@@ -301,32 +312,65 @@ text-decoration:none;
 <!-- STORY -->
 <div class="story-wrap">
 
+<!-- STORY KAMU -->
 <div class="story">
-<div class="story-ring"><div>👤</div></div>
+<div class="story-ring">
+<div>➕</div>
+</div>
 Kamu
 </div>
 
+<!-- STORY DATABASE -->
+{% for story in stories %}
 <div class="story">
-<div class="story-ring"><div>🌸</div></div>
-Syifa
+
+<div class="story-ring">
+
+{% if story.user.profile.photo %}
+<img src="{{ story.user.profile.photo.url }}">
+{% else %}
+<div>👤</div>
+{% endif %}
+
 </div>
 
-<div class="story">
-<div class="story-ring"><div>✨</div></div>
-Bestie
+{{ story.user.username }}
+
 </div>
+{% empty %}
+
+<div class="story">
+<div class="story-ring"><div>🌸</div></div>
+Belum Ada
+</div>
+
+{% endfor %}
 
 </div>
 
 <!-- MENU -->
 <div class="menu">
-<div>🔥 Explore</div>
-<div>🎥 Reels</div>
-<div>💬 Chat</div>
-<div>💖 Notif</div>
+<a href="/explore/">🔥 Explore</a>
+<a href="/reels/">🎥 Reels</a>
+<a href="/chat/">💬 Chat</a>
+<a href="#">💖 Notif</a>
 </div>
 
-<!-- UPLOAD -->
+<!-- UPLOAD STORY -->
+<div class="upload">
+
+<form method="POST" enctype="multipart/form-data" action="/story-upload/">
+{% csrf_token %}
+
+<input type="file" name="image" required>
+
+<button type="submit">Upload Story</button>
+
+</form>
+
+</div>
+
+<!-- UPLOAD POST -->
 <div class="upload">
 
 <form method="POST" enctype="multipart/form-data" action="/upload/">
@@ -337,7 +381,7 @@ Bestie
 <input type="file" name="image">
 <input type="file" name="video">
 
-<button type="submit">Upload Sekarang</button>
+<button type="submit">Upload Postingan</button>
 
 </form>
 
