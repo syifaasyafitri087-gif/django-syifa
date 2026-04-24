@@ -12,13 +12,21 @@
 
 <style>
 
-body{
+*{
 
     margin:0;
 
+    padding:0;
+
+    box-sizing:border-box;
+
+}
+
+body{
+
     font-family:Arial, Helvetica, sans-serif;
 
-    background:#f0f2f5;
+    background:#f3f4f6;
 
 }
 
@@ -30,13 +38,19 @@ body{
 
     color:white;
 
-    padding:15px 30px;
+    padding:15px 25px;
 
     display:flex;
 
     justify-content:space-between;
 
     align-items:center;
+
+    position:sticky;
+
+    top:0;
+
+    z-index:100;
 
 }
 
@@ -50,29 +64,29 @@ body{
 
 .nav-right a{
 
-    color:white;
-
     text-decoration:none;
 
-    margin-left:15px;
+    color:white;
 
-    font-size:14px;
+    margin-left:10px;
 
     padding:8px 14px;
 
     border-radius:8px;
 
+    font-size:14px;
+
 }
 
-.nav-right a:first-child{
+.profile-btn{
 
     background:#facc15;
 
-    color:black;
+    color:black !important;
 
 }
 
-.nav-right a:last-child{
+.logout-btn{
 
     background:#ef4444;
 
@@ -82,9 +96,11 @@ body{
 
 .container{
 
-    width:500px;
+    max-width:520px;
 
-    margin:30px auto;
+    margin:25px auto;
+
+    padding:0 10px;
 
 }
 
@@ -96,17 +112,19 @@ body{
 
     padding:20px;
 
-    border-radius:12px;
+    border-radius:14px;
 
     margin-bottom:20px;
 
-    box-shadow:0 2px 8px rgba(0,0,0,0.08);
+    box-shadow:0 4px 10px rgba(0,0,0,0.08);
 
 }
 
 .upload-box h2{
 
-    margin-top:0;
+    margin-bottom:15px;
+
+    font-size:22px;
 
 }
 
@@ -122,9 +140,7 @@ body{
 
     border:1px solid #ddd;
 
-    border-radius:8px;
-
-    box-sizing:border-box;
+    border-radius:10px;
 
 }
 
@@ -132,21 +148,21 @@ body{
 
     width:100%;
 
-    margin-top:10px;
+    margin-top:12px;
 
     padding:12px;
 
     border:none;
 
+    border-radius:10px;
+
     background:#2563eb;
 
     color:white;
 
-    border-radius:8px;
+    font-size:16px;
 
     cursor:pointer;
-
-    font-size:16px;
 
 }
 
@@ -156,13 +172,13 @@ body{
 
     background:white;
 
-    border-radius:12px;
-
-    margin-bottom:20px;
+    border-radius:14px;
 
     overflow:hidden;
 
-    box-shadow:0 2px 8px rgba(0,0,0,0.08);
+    margin-bottom:22px;
+
+    box-shadow:0 4px 10px rgba(0,0,0,0.08);
 
 }
 
@@ -180,9 +196,27 @@ body{
 
 .post-user{
 
+    font-size:18px;
+
     font-weight:bold;
 
-    font-size:18px;
+}
+
+.follow-btn{
+
+    color:#0095f6;
+
+    text-decoration:none;
+
+    font-weight:bold;
+
+}
+
+.following-btn{
+
+    color:gray;
+
+    text-decoration:none;
 
 }
 
@@ -194,11 +228,27 @@ body{
 
     display:block;
 
+    background:black;
+
 }
 
 .post-body{
 
     padding:15px;
+
+}
+
+.caption{
+
+    margin-bottom:12px;
+
+    font-size:15px;
+
+}
+
+.action{
+
+    margin-bottom:12px;
 
 }
 
@@ -208,29 +258,15 @@ body{
 
     margin-right:12px;
 
-    font-size:14px;
-
     color:#111827;
 
-}
-
-.follow-btn{
-
-    color:#0095f6;
-
-    font-weight:bold;
-
-    text-decoration:none;
-
     font-size:14px;
 
 }
 
-.following-btn{
+.comment{
 
-    color:gray;
-
-    text-decoration:none;
+    margin-bottom:6px;
 
     font-size:14px;
 
@@ -244,11 +280,43 @@ body{
 
     border:1px solid #ddd;
 
-    border-radius:8px;
-
-    box-sizing:border-box;
+    border-radius:10px;
 
     margin-top:10px;
+
+}
+
+.empty{
+
+    color:#777;
+
+    font-size:14px;
+
+}
+
+/* MOBILE */
+
+@media(max-width:600px){
+
+    .navbar{
+
+        padding:12px 15px;
+
+    }
+
+    .logo{
+
+        font-size:20px;
+
+    }
+
+    .nav-right a{
+
+        padding:7px 10px;
+
+        font-size:13px;
+
+    }
 
 }
 
@@ -266,9 +334,9 @@ body{
 
     <div class="nav-right">
 
-        <a href="/profile/">Profile</a>
+        <a href="/profile/" class="profile-btn">Profile</a>
 
-        <a href="/logout/">Logout</a>
+        <a href="/logout/" class="logout-btn">Logout</a>
 
     </div>
 
@@ -286,11 +354,11 @@ body{
 
 <h2>Buat Postingan 📷🎥</h2>
 
-<textarea name="caption" placeholder="Tulis caption..."></textarea>
+<textarea name="caption" rows="3" placeholder="Tulis caption..."></textarea>
 
-<input type="file" name="image">
+<input type="file" name="image" accept="image/*">
 
-<input type="file" name="video">
+<input type="file" name="video" accept="video/*">
 
 <button type="submit">Upload</button>
 
@@ -298,7 +366,7 @@ body{
 
 </div>
 
-<!-- POSTINGAN -->
+<!-- FEED -->
 
 {% for post in posts %}
 
@@ -314,23 +382,11 @@ body{
 
             {% if request.user in post.user.followers.all %}
 
-                <a href="/unfollow/{{ post.user.id }}/"
-
-                   class="following-btn">
-
-                   Following
-
-                </a>
+                <a href="/unfollow/{{ post.user.id }}/" class="following-btn">Following</a>
 
             {% else %}
 
-                <a href="/follow/{{ post.user.id }}/"
-
-                   class="follow-btn">
-
-                   Follow
-
-                </a>
+                <a href="/follow/{{ post.user.id }}/" class="follow-btn">Follow</a>
 
             {% endif %}
 
@@ -338,7 +394,7 @@ body{
 
     </div>
 
-    <!-- FOTO -->
+    <!-- IMAGE -->
 
     {% if post.image %}
 
@@ -362,7 +418,7 @@ body{
 
     <div class="post-body">
 
-        <p>{{ post.caption }}</p>
+        <div class="caption">{{ post.caption }}</div>
 
         <div class="action">
 
@@ -378,17 +434,21 @@ body{
 
         </div>
 
-        <hr>
+        <hr style="margin:10px 0; border:none; border-top:1px solid #eee;">
 
         <!-- KOMENTAR -->
 
         {% for comment in post.comments.all %}
 
-            <p><b>{{ comment.user.username }}</b> {{ comment.text }}</p>
+            <div class="comment">
+
+                <b>{{ comment.user.username }}</b> {{ comment.text }}
+
+            </div>
 
         {% empty %}
 
-            <p>Belum ada komentar</p>
+            <div class="empty">Belum ada komentar</div>
 
         {% endfor %}
 

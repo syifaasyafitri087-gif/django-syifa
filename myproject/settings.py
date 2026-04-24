@@ -2,19 +2,9 @@ from pathlib import Path
 
 import os
 
-# =====================================
-
-# BASE DIRECTORY
-
-# =====================================
-
 BASE_DIR = Path(__file__).resolve().parent.parent
 
-# =====================================
-
 # SECURITY
-
-# =====================================
 
 SECRET_KEY = 'django-insecure-change-this-key'
 
@@ -30,11 +20,7 @@ CSRF_TRUSTED_ORIGINS = [
 
 ]
 
-# =====================================
-
-# INSTALLED APPS
-
-# =====================================
+# APPS
 
 INSTALLED_APPS = [
 
@@ -54,11 +40,7 @@ INSTALLED_APPS = [
 
 ]
 
-# =====================================
-
 # MIDDLEWARE
-
-# =====================================
 
 MIDDLEWARE = [
 
@@ -80,19 +62,9 @@ MIDDLEWARE = [
 
 ]
 
-# =====================================
-
-# URL
-
-# =====================================
-
 ROOT_URLCONF = 'myproject.urls'
 
-# =====================================
-
-# TEMPLATES
-
-# =====================================
+# TEMPLATE
 
 TEMPLATES = [
 
@@ -122,19 +94,9 @@ TEMPLATES = [
 
 ]
 
-# =====================================
-
-# WSGI
-
-# =====================================
-
 WSGI_APPLICATION = 'myproject.wsgi.application'
 
-# =====================================
-
 # DATABASE
-
-# =====================================
 
 DATABASES = {
 
@@ -148,19 +110,11 @@ DATABASES = {
 
 }
 
-# =====================================
-
 # PASSWORD
-
-# =====================================
 
 AUTH_PASSWORD_VALIDATORS = []
 
-# =====================================
-
 # LANGUAGE
-
-# =====================================
 
 LANGUAGE_CODE = 'en-us'
 
@@ -170,13 +124,11 @@ USE_I18N = True
 
 USE_TZ = True
 
-# =====================================
-
-# STATIC FILES
-
-# =====================================
+# STATIC
 
 STATIC_URL = '/static/'
+
+STATIC_ROOT = BASE_DIR / 'staticfiles'
 
 STATICFILES_DIRS = [
 
@@ -184,36 +136,20 @@ STATICFILES_DIRS = [
 
 ]
 
-STATIC_ROOT = BASE_DIR / 'staticfiles'
-
 STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
 
-# =====================================
-
-# MEDIA FILES
-
-# =====================================
+# MEDIA
 
 MEDIA_URL = '/media/'
 
 MEDIA_ROOT = BASE_DIR / 'media'
 
-# =====================================
-
 # LOGIN
-
-# =====================================
 
 LOGIN_URL = '/login/'
 
 LOGIN_REDIRECT_URL = '/home/'
 
 LOGOUT_REDIRECT_URL = '/login/'
-
-# =====================================
-
-# DEFAULT PK
-
-# =====================================
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
